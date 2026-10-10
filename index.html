@@ -1,0 +1,1765 @@
+<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'self' https://planas-sync.projektai777.workers.dev; base-uri 'none'; form-action 'none'"><title>Mokymasis</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#F5F7F3; --bg2:#EBEFE8; --panel:#FFFFFF; --ink:#1F2A24; --ink2:#4E5C55; --mute:#8A968F; --line:#D5DDD6;
+  --acc:#2E7D5B; --acc2:#DCEDE3; --acc-ink:#1E5C42; --rose:#B4524B; --rose2:#F1DEDC; --amber:#B98A2E; --amber2:#F3E8CF;
+  --blue:#3A6EA5; --blue2:#DCE6F2; --good:#2E7D5B; --bad:#B4524B; --shadow:0 1px 2px rgba(20,30,25,.06),0 6px 20px rgba(20,30,25,.06);
+  --serif:Georgia,"Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  --geo:#5F5496; --geo2:#E6E2F2;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131A16; --bg2:#1B2420; --panel:#1F2A25; --ink:#E6ECE7; --ink2:#B4C0B8; --mute:#7D8A82; --line:#31403A;
+  --acc:#72C69C; --acc2:#22392E; --acc-ink:#9BDDBB; --rose:#E08A83; --rose2:#3D2624; --amber:#E0B35C; --amber2:#3A3120;
+  --blue:#7FA9DA; --blue2:#1F2E42; --good:#72C69C; --bad:#E08A83; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  --geo:#B4A9E4; --geo2:#2A2640;
+}}
+:root[data-theme="dark"]{
+  --bg:#131A16; --bg2:#1B2420; --panel:#1F2A25; --ink:#E6ECE7; --ink2:#B4C0B8; --mute:#7D8A82; --line:#31403A;
+  --acc:#72C69C; --acc2:#22392E; --acc-ink:#9BDDBB; --rose:#E08A83; --rose2:#3D2624; --amber:#E0B35C; --amber2:#3A3120;
+  --blue:#7FA9DA; --blue2:#1F2E42; --good:#72C69C; --bad:#E08A83; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  --geo:#B4A9E4; --geo2:#2A2640;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5}
+button{font:inherit;cursor:pointer;color:inherit}
+h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.7rem,4.5vw,2.4rem)}
+h2{font-size:1.25rem}
+h3{font-size:1.05rem}
+.eyebrow{font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;color:var(--acc-ink);font-weight:700}
+.wrap{max-width:820px;margin:0 auto;padding:0 14px 70px}
+header.top{padding:20px 0 10px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:flex-start;justify-content:space-between}
+header.top .lead{color:var(--ink2);margin:.3rem 0 0;font-size:.92rem}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 11px;font-size:.86rem;font-weight:600;color:var(--ink2)}
+.chip.sub{border-color:transparent}
+.s-biologija{background:var(--acc2);color:var(--acc-ink)}
+.s-matematika{background:var(--blue2);color:var(--blue)}
+.s-lietuviu{background:var(--amber2);color:var(--amber)}
+.s-anglu{background:var(--rose2);color:var(--rose)}
+.s-geografija{background:var(--geo2);color:var(--geo)}
+
+/* test picker */
+.picker{display:flex;gap:8px;overflow-x:auto;padding:6px 2px 12px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.picker::-webkit-scrollbar{height:6px}
+.tchip{flex:0 0 auto;scroll-snap-align:start;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:8px 12px;text-align:left;min-height:44px;color:var(--ink2)}
+.tchip .sn{display:block;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--mute)}
+.tchip .tt{display:block;font-weight:600;color:var(--ink)}
+.tchip .rl{display:block;font-size:.78rem;color:var(--mute)}
+.tchip.sel{border-color:var(--acc);background:var(--acc2);color:var(--acc-ink)}
+.tchip.sel .sn,.tchip.sel .rl{color:var(--acc-ink)}
+.empty{color:var(--mute);padding:20px 0}
+
+/* selected test card */
+.testcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:6px 0 14px;box-shadow:var(--shadow)}
+.testmeta{color:var(--ink2);font-size:.92rem;margin:2px 0 10px}
+.markrow{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.markbtn{border:1px solid var(--line);background:var(--panel);border-radius:10px;min-width:42px;min-height:42px;font-weight:700}
+.markbtn[aria-pressed="true"]{border-color:var(--acc);background:var(--acc2);color:var(--acc-ink)}
+.progline{margin:12px 0 4px;color:var(--ink2);font-size:.92rem}
+.progbar{height:8px;background:var(--bg2);border-radius:4px;overflow:hidden;margin:6px 0}
+.progbar i{display:block;height:100%;background:var(--acc)}
+.moreneed{font-size:.86rem;color:var(--amber);margin:4px 0}
+.hidedonewrap{display:flex;align-items:center;gap:8px;margin:12px 0 4px}
+.hidedonewrap button{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:5px 12px;font-size:.84rem;font-weight:600;min-height:36px}
+.hidedonewrap button[aria-pressed="true"]{border-color:var(--acc);background:var(--acc2);color:var(--acc-ink)}
+.waitingmsg{color:var(--mute);padding:14px 0}
+
+/* task list */
+.tasklist{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.frow{display:flex;gap:8px;align-items:flex-start}
+.frow.done{opacity:.7}
+.fcheck{flex:0 0 auto;width:42px;height:42px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font-size:1.05rem;font-weight:700;color:var(--good)}
+.fcheck[aria-pressed="true"]{background:var(--acc2);border-color:var(--acc);color:var(--acc-ink)}
+.fbody{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.fbody .chip{align-self:flex-start}
+
+.topicsbox{margin-top:18px}
+.topiclinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.topiclink{min-height:42px}
+.syncbadge{font-size:.78rem;color:var(--mute);white-space:nowrap}
+.syncbadge.on{color:var(--acc-ink)}
+
+/* items (from planas.template.html) */
+.item[data-toggle]{cursor:pointer}
+.item{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:var(--bg);display:flex;flex-direction:column;gap:6px;text-align:left}
+.item .k{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.item .k .p{margin-left:auto;font-family:var(--serif);font-size:.95rem;color:var(--ink);letter-spacing:0;text-transform:none}
+.item .t{font-weight:600}
+.item .a{display:none;border-top:1px dashed var(--line);padding-top:8px;margin-top:2px}
+.item.open .a{display:block}
+.item .steps{margin:.5rem 0 0;padding-left:1.15rem}
+.item .steps li{margin:.15rem 0}
+.item .why{font-size:.86rem;color:var(--ink2);margin-top:6px}
+.mem{margin-top:8px;font-size:.92rem}
+.mem b{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--acc-ink)}
+.mem .hooks{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.mem .ms{color:var(--ink2);font-style:italic}
+.rchip{border:1px solid var(--acc);background:var(--acc2);color:var(--acc-ink);border-radius:999px;padding:2px 10px;font-size:.84rem;font-weight:600}
+.hchip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:2px 10px;font-size:.84rem}
+.judge{display:flex;gap:8px;margin-top:6px}
+.judge .btn{min-height:44px;min-width:44px}
+.flip{position:relative;min-height:88px;border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:12px 14px;text-align:left;display:block;width:100%}
+.flip .side{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:700}
+.flip .f{font-weight:700;font-size:1.1rem;font-family:var(--serif)}
+.flip .b{display:none;margin-top:6px}
+.flip .b .kw{font-family:var(--serif);font-weight:700;color:var(--acc-ink);font-size:1.05rem}
+.flip.on .f{opacity:.55;font-size:.95rem}
+.flip.on .b{display:block}
+.tile{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:10px 12px;width:100%;text-align:left}
+.tile .v{font-family:var(--serif);font-weight:700;font-size:1.1rem;color:var(--acc-ink);min-width:3ch;text-align:right;filter:blur(7px);transition:filter .2s}
+.tile.on .v{filter:none}
+.opts{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.opt{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:8px 11px;text-align:left}
+.opt.right{border-color:var(--good);background:var(--acc2)}
+.opt.wrong{border-color:var(--bad);background:var(--rose2)}
+.expl{display:none;font-size:.9rem;color:var(--ink2);margin-top:6px}
+.item.answered .expl{display:block}
+.mn{border-left:3px solid var(--amber);padding:6px 12px;background:var(--panel);border-radius:0 10px 10px 0}
+.mn b{font-family:var(--serif);font-size:1.05rem;display:block}
+.mn span{font-size:.92rem;color:var(--ink2)}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:7px 13px;font-weight:600;font-size:.92rem;min-height:40px}
+.btn.primary{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.ok{border-color:var(--good);color:var(--good)}
+.btn.no{border-color:var(--bad);color:var(--bad)}
+.btn.sm{padding:4px 9px;font-size:.82rem;min-height:40px;min-width:40px}
+.btn:focus-visible,.item:focus-visible,.tchip:focus-visible,.flip:focus-visible,.opt:focus-visible,.roomg:focus-visible,.markbtn:focus-visible,.fcheck:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+/* deadlines (from planas.template.html) */
+.dl{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:10px 14px 4px;margin:18px 0}
+.dlh{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px}
+.dlh h3{font-size:1rem}
+.dl ul{list-style:none;margin:6px 0 0;padding:0}
+.dl li{display:grid;grid-template-columns:14rem minmax(0,1fr) auto;gap:2px 16px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line)}
+.dl .when{font-weight:700;font-variant-numeric:tabular-nums}
+.dl .clk{font-family:var(--serif);font-size:1.05rem;margin-left:6px}
+.dl .nt{display:block;font-weight:600;font-size:.84rem;color:var(--mute)}
+.dl .ttl{font-weight:600}
+.dl .sub2{display:block;font-size:.84rem;color:var(--ink2)}
+.dl .it+.it{margin-top:8px}
+.dl .rel{font-size:.86rem;color:var(--mute);white-space:nowrap;font-variant-numeric:tabular-nums}
+.dlmore{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)}
+.dlmore.collapsed ul{display:none}
+.dltog{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:3px 11px;font-size:.82rem;font-weight:600;min-height:36px;color:var(--ink2)}
+@media (max-width:640px){.dl li{grid-template-columns:minmax(0,1fr) auto}}
+
+/* palace dialog (from planas.template.html) */
+dialog#palace{border:none;border-radius:16px;padding:0;max-width:min(96vw,980px);width:100%;background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+dialog#palace::backdrop{background:rgba(10,20,15,.55)}
+.pwrap{padding:16px 18px 18px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.pwrap{grid-template-columns:1fr}}
+.pwrap svg{width:100%;height:auto;background:var(--bg2);border:1px solid var(--line);border-radius:12px}
+.pwrap .room rect{fill:var(--bg2);stroke:var(--line);stroke-width:2;transition:fill .15s}
+.pwrap .room{cursor:pointer}
+.pwrap .room:hover rect{fill:var(--acc2)}
+.pwrap .room.on rect{fill:var(--acc2);stroke:var(--acc);stroke-width:3}
+.pwrap .room.done rect{stroke:var(--acc)}
+.pwrap .room text{font-family:var(--sans);font-size:13px;fill:var(--ink);pointer-events:none}
+.pwrap .room text.rn{font-family:var(--serif);font-size:17px;font-weight:700}
+.pwrap .room text.ro{font-size:11.5px;fill:var(--ink2)}
+.pwrap .route{fill:none;stroke:var(--amber);stroke-width:3;stroke-dasharray:7 6}
+.phead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px 0}
+.stop{border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:200px;background:var(--bg)}
+.stop .scene{color:var(--ink2);margin:.3rem 0 .6rem}
+.stop.recall .scene,.stop.recall .hk .b{display:none}
+.stop .hk{border:1px solid var(--line);border-radius:9px;padding:7px 10px;margin-top:6px;background:var(--panel)}
+.stop .hk .kw{font-family:var(--serif);font-weight:700;color:var(--acc-ink)}
+.stop .hk .b{font-size:.92rem;color:var(--ink2)}
+.stop.recall .hk.show .b{display:block}
+.walkbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.walkbar .pos{margin-left:auto;color:var(--mute);font-variant-numeric:tabular-nums}
+.small{font-size:.85rem;color:var(--mute)}
+footer{margin-top:30px;color:var(--mute);font-size:.85rem}
+/* board.css - the handwritten maths board. Inlined by tools/topic.py and tools/plan.py. */
+.bd,.bd-calc{--bd-paper:#FFFEF6;--bd-grid:rgba(58,108,178,.16);--bd-margin:rgba(214,64,58,.5);--bd-ink:#1C3E9C;--bd-red:#CF3328;--bd-green:#1F7A4D;
+  --bd-say:#FFFFFF;--bd-line:#D5DDD6;--bd-mute:#66736C;--bd-text:#1F2A24;--bd-amber:#D69A2D;
+  margin:10px 0 4px;display:flex;flex-direction:column;gap:10px;text-align:left;cursor:auto;
+  font-family:"Shantell Sans","Segoe Print","Comic Sans MS",system-ui,sans-serif;color:var(--bd-text)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.bd,.bd-calc){--bd-paper:#1A212E;--bd-grid:rgba(150,180,230,.12);--bd-margin:rgba(255,125,115,.42);
+  --bd-ink:#A9C5FF;--bd-red:#FF8C82;--bd-green:#80D8A8;--bd-say:#1F2A25;--bd-line:#31403A;--bd-mute:#93A39A;--bd-text:#E6ECE7;--bd-amber:#E8B85F}}
+:root[data-theme="dark"] :is(.bd,.bd-calc){--bd-paper:#1A212E;--bd-grid:rgba(150,180,230,.12);--bd-margin:rgba(255,125,115,.42);
+  --bd-ink:#A9C5FF;--bd-red:#FF8C82;--bd-green:#80D8A8;--bd-say:#1F2A25;--bd-line:#31403A;--bd-mute:#93A39A;--bd-text:#E6ECE7;--bd-amber:#E8B85F}
+.bd,.bd *,.bd *::before,.bd *::after{box-sizing:border-box}
+.bd[hidden]{display:none!important}
+.bd-paper{border:1px solid var(--bd-line);border-radius:6px 6px 12px 12px;overflow-x:auto;overflow-y:hidden;background:var(--bd-paper)}
+.bd-sheet{position:relative;min-width:100%;width:max-content;min-height:132px;padding:14px 64px 20px 16px;background-color:var(--bd-paper);
+  background-image:linear-gradient(to right,var(--bd-grid) 1px,transparent 1px),linear-gradient(to bottom,var(--bd-grid) 1px,transparent 1px);
+  background-size:22px 22px;background-position:-1px -1px}
+.bd-sheet::after{content:"";position:absolute;top:0;bottom:0;right:46px;border-left:2px solid var(--bd-margin);pointer-events:none}
+.bd-l{position:relative;display:flex;align-items:center;white-space:nowrap;min-height:44px;padding:4px 6px;color:var(--bd-ink);
+  font-family:"Caveat","Shantell Sans",cursive;font-weight:600;font-size:31px;line-height:1.08}
+.bd-in{display:inline-flex;align-items:center;flex-wrap:nowrap;gap:0}
+.bd-l.bd-txt{white-space:normal;font-size:25px}
+.bd-l.bd-txt .bd-in{display:inline-block;max-width:34ch}
+.bd-l.bd-fix{color:var(--bd-green)}
+.bd-l.bd-wrong:not(.bd-bad){opacity:.38}
+.bd-l.bd-fig{white-space:normal;padding:6px 6px 2px}
+.bd-fig svg{display:block;width:280px;max-width:none;height:auto}
+.bd-l.bd-blank{font-family:"Shantell Sans",system-ui,sans-serif;font-weight:600;font-size:14px;color:var(--bd-mute);border:2px dashed var(--bd-grid);border-radius:8px;margin:4px 0;min-height:40px;padding:6px 10px;white-space:normal;max-width:30ch}
+.bd-l.bd-click{cursor:pointer;border-radius:6px}
+.bd-l.bd-click:hover{background:rgba(58,108,178,.08)}
+.bd-l sup{font-size:.6em;line-height:0;position:relative;top:-.62em;margin-left:.04em}
+.bd-l sub{font-size:.58em;line-height:0;position:relative;top:.3em}
+.bd-fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .1em;font-size:.84em;line-height:1.04}
+.bd-fr>span{padding:0 .16em}
+.bd-fr>.bd-nu{border-bottom:2px solid currentColor}
+/* inside a fraction or under a root a power keeps its own line box -
+   no relative lift, a real vertical-align - so it can never climb onto the bar; tools/boardcheck.py measures this on the pixels */
+.bd-fr sup,.bd-rb sup{position:static;top:auto;line-height:1;vertical-align:.45em}
+.bd-fr sub,.bd-rb sub{position:static;top:auto;line-height:1;vertical-align:-.25em}
+.bd-fr>.bd-de{padding-top:.1em}
+.bd-rt{display:inline-flex;align-items:stretch;margin:0 .05em}
+.bd-rt>svg{width:.5em;flex:0 0 auto;overflow:visible}
+.bd-rt>svg path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.bd-ri{font-size:.5em;align-self:flex-start;margin:.1em -.28em 0 0;position:relative;z-index:1}
+.bd-rb{border-top:2px solid currentColor;padding:.08em .12em 0;margin-top:.1em;display:inline-flex;align-items:center}
+.bd-g{display:inline-block;width:.64em;height:.72em;margin:0 .07em;overflow:visible;vertical-align:middle}
+.bd-g path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bd-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.bd-id{display:inline-flex;align-items:center}
+.bd-id>sup{align-self:flex-start}   /* a flex child ignores vertical-align: a power directly inside a labelled part is pinned to the top (boardcheck 2026-09-12: "64^{2/3}" sat on the baseline) */
+.bd-id>sub{align-self:flex-end}
+.bd-num{position:absolute;right:-52px;width:24px;text-align:center;font:700 21px/1 "Caveat",cursive;color:var(--bd-red);pointer-events:none}
+.bd-ov{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.bd-ov path{fill:none;stroke:var(--bd-red);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.bd-ov path.g{stroke:var(--bd-green)}
+.bd-note{position:absolute;font:700 22px/1 "Caveat",cursive;color:var(--bd-red);white-space:nowrap;pointer-events:none;transform:translateX(-50%)}
+.bd-note.g{color:var(--bd-green)}
+.bd-pen{position:absolute;left:0;top:0;width:30px;height:30px;pointer-events:none;opacity:0;z-index:3;color:var(--bd-ink)}
+.bd-say,.bd-ask{background:var(--bd-say);border:1px solid var(--bd-line);border-radius:10px;padding:10px 12px;font-size:15px;line-height:1.5}
+.bd-say p,.bd-ask p{margin:.3rem 0 0}
+.bd-say b{color:var(--bd-ink)}
+.bd-k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--bd-mute);font-weight:700}
+.bd-mind{border-left:3px solid var(--bd-amber);padding-left:9px}
+.bd-im{font-family:"Caveat",cursive;font-weight:700;font-size:1.3em;color:var(--bd-ink);white-space:nowrap}
+.bd-im sup{font-size:.62em}
+.bd-o{display:block;width:100%;text-align:left;border:1px solid var(--bd-line);background:var(--bd-paper);color:var(--bd-text);border-radius:9px;padding:8px 11px;margin-top:6px;font:inherit;min-height:44px}
+.bd-o.ok{border-color:var(--bd-green);box-shadow:inset 0 0 0 1.5px var(--bd-green)}
+.bd-o.no{border-color:var(--bd-red);box-shadow:inset 0 0 0 1.5px var(--bd-red)}
+.bd-ctl{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.bd-b{border:1px solid var(--bd-line);background:var(--bd-say);color:var(--bd-text);border-radius:9px;padding:7px 12px;min-height:40px;
+  font-family:"Shantell Sans",system-ui,sans-serif;font-weight:600;font-size:14px;line-height:1.2;cursor:pointer}
+.bd-b.pri{background:var(--bd-ink);border-color:var(--bd-ink);color:var(--bd-paper)}
+.bd-b:disabled{opacity:.45;cursor:default}
+.bd-b:focus-visible,.bd-o:focus-visible,.bd-l.bd-click:focus-visible{outline:3px solid var(--bd-amber);outline-offset:2px}
+.bd-modes{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.bd-m{font-size:13px;padding:5px 9px;min-height:36px}
+.bd-m[aria-pressed="true"]{border-color:var(--bd-ink);color:var(--bd-ink);box-shadow:inset 0 -3px 0 var(--bd-ink)}
+.bd-dots{display:flex;gap:5px;flex-wrap:wrap}
+.bd-dot{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--bd-line);background:transparent;color:var(--bd-mute);font:600 13px "Shantell Sans",system-ui,sans-serif;cursor:pointer;padding:0}
+.bd-dot.on{border-color:var(--bd-ink);color:var(--bd-ink)}
+.bd-dot.cur{background:var(--bd-ink);color:var(--bd-paper)}
+.bd-dot.me{border-style:dashed}
+@keyframes bdShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.bd-shake{animation:bdShake .28s ease-in-out 2}
+@media (prefers-reduced-motion:reduce){.bd *{animation:none!important;transition:none!important}}
+@media (max-width:560px){.bd-l{font-size:27px;min-height:40px}.bd-l.bd-txt{font-size:23px}.bd-sheet{padding-right:50px}.bd-sheet::after{right:36px}
+  .bd-num{right:-44px}.bd-modes{margin-left:0}.bd-say,.bd-ask{font-size:14.5px}}
+
+/* calculator strip (tools/calc.py key tokens) */
+.bd-calc{border-left:3px solid var(--bd-ink);padding:2px 0 2px 9px;margin-top:.45rem;cursor:pointer;line-height:2.1;color:var(--bd-text);font-family:"Shantell Sans","Segoe Print","Comic Sans MS",system-ui,sans-serif;font-size:15px;display:block;margin-bottom:0}
+.bd .bd-calc{display:block}
+.bd-calc b{color:var(--bd-ink)}
+.bd-calc:focus-visible{outline:3px solid var(--bd-amber);outline-offset:2px;border-radius:6px}
+.ckeys{display:inline}
+.ck{display:inline-block;min-width:24px;padding:1px 6px;margin:0 2px;border:1px solid var(--bd-line);border-bottom-width:3px;border-radius:6px;background:var(--bd-paper);color:var(--bd-text);font:600 13px/1.45 "Shantell Sans",system-ui,sans-serif;text-align:center;vertical-align:middle;transition:transform .12s,background .12s}
+.ck i{display:block;font-style:italic;font-size:10px;line-height:1.1;color:var(--bd-amber)}
+.ck-s{background:var(--bd-amber);border-color:var(--bd-amber);color:#1F2A24;font-size:11px}
+.ck-a{background:var(--bd-say);color:var(--bd-mute)}
+.ck.lit{transform:translateY(2px);border-bottom-width:1px;background:var(--bd-ink);color:var(--bd-paper);box-shadow:0 0 0 2px var(--bd-ink)}
+.ck.lit i{color:var(--bd-paper)}
+.ck.done{opacity:.38}
+.cstep{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:6px 0 4px;line-height:1.4}
+.cstep button{font:600 14px/1.2 "Shantell Sans",system-ui,sans-serif;min-height:44px;padding:8px 14px;border:1px solid var(--bd-line);border-radius:10px;background:var(--bd-paper);color:var(--bd-text);cursor:pointer}
+.cstep .cs-next{background:var(--bd-ink);border-color:var(--bd-ink);color:var(--bd-paper)}
+.cstep .cs-now{display:inline-flex;align-items:center;gap:8px;font-size:15px}
+.cstep .cs-i{font-variant-numeric:tabular-nums;color:var(--bd-mute);font-size:13px}
+.cstep .ck.big{font-size:22px;min-width:44px;padding:6px 12px;margin:0}
+.cstep .ck.big i{font-size:13px}
+.cd{font:700 17px/1 "Caveat",cursive;color:var(--bd-green);margin-left:6px;white-space:nowrap}
+.cn{display:block;font-size:13px;line-height:1.4;color:var(--bd-mute)}
+
+/* phone fit: tap targets >= 40 px, no sideways scroll at 320 px, no iOS focus zoom */
+input,select,textarea{font-size:16px}
+.item,.dl,.mn{overflow-wrap:anywhere}
+body{overflow-x:hidden}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div>
+    <div class="eyebrow">Mokymasis</div>
+    <h1>Mokymasis</h1>
+    <p class="lead" id="built"></p>
+  </div>
+  <span class="chip syncbadge" id="syncbadge"></span>
+</header>
+
+<div class="picker" id="picker" role="tablist" aria-label="Testai"></div>
+
+<section id="testcard"></section>
+
+<section class="dl" id="dl" aria-label="Terminai"></section>
+
+<footer id="foot">Šis puslapis rodo vieną testą vienu metu – pasirink jį viršuje.</footer>
+</div>
+
+<dialog id="palace">
+  <div class="phead"><div><div class="eyebrow">Atminties rūmai</div><h2 id="ptitle">Kelias per tavo butą</h2></div><button class="btn sm" id="pclose">Uždaryti</button></div>
+  <div class="pwrap"><div><div id="psvg"></div>
+    <div class="walkbar"><button class="btn primary" id="walkNext">Kitas kambarys →</button><button class="btn" id="walkMode">Iš atminties</button><button class="btn" id="walkReset">Nuo pradžių</button><span class="pos" id="walkPos"></span></div>
+  </div><div class="stop" id="stop"></div></div>
+</dialog>
+
+<script>/* board.js - the handwritten maths board: interactive step-by-step animations in a handwritten style, with an
+   explanation in words of what was done in that step, why, and the best way to work it out mentally.
+   Inlined by tools/topic.py (topic pages) and tools/plan.py (the hub). Content contract + validator: tools/topic.py.
+
+   A board is a list of STEPS. Each step writes zero or more LINES in ink, then draws MARKS in red pen, then explains:
+     {"w": "line" | ["line", ...], "marks": [["o"|"x"|"u"|"b", "<id>", "note?", "g?"]],
+      "do": "Ka darau", "why": "Kodel", "mind": "Mintyse - greiciausias budas", "ask": {"q": "...", "o": ["..."], "r": 0},
+      "calc": {"k": ["6","2","5","pow","3","÷","4","▶","="], "d": "125", "n": "note?"}}   (keys: tools/calc.py, verified at build)
+   LINE markup: ^{..} / ^2 / ^-2 powers, _{..} indices, \f{a}{b} fraction, √{..} or √[3]{..} root, [#id ..] a part a later
+   mark can circle (o), cross out (x), underline (u) or box (b); a line starting with "~" is words (wraps); "Ats." lines get
+   the double underline a teacher expects. Unicode powers (x⁻²) and ∪ ∩ ∈ ∉ ∞ → ⇒ ∅ are drawn by hand (fonts lack them).
+   Learning mechanics: prediction before a step (ask), backward fading by level (0 watch, 1 finish the last half yourself,
+   2 whole task yourself), a hint ladder on your own steps, skip-to-final for reduced motion. */
+(function(){
+'use strict';
+if(window.Board)return;
+const reduced=()=>!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+','ⁿ':'n','ˣ':'x'};
+const SUB={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','ₐ':'a','ₓ':'x'};
+const GL={
+  '∪':'M4 4 C4 18 16 18 16 4','∩':'M4 18 C4 4 16 4 16 18',
+  '∈':'M16 5 C7 4 4 8 4 11 C4 14 7 18 16 17 M5 11 H14','∉':'M16 5 C7 4 4 8 4 11 C4 14 7 18 16 17 M5 11 H14 M13 1.5 L7 20.5',
+  '∞':'M10 11 C7.5 6 2 7 2 11 C2 15 7.5 16 10 11 C12.5 6 18 7 18 11 C18 15 12.5 16 10 11',
+  '→':'M2 11 H17 M12 6.5 L17 11 L12 15.5','⇒':'M2 8.5 H15 M2 13.5 H15 M11 4.5 L17.5 11 L11 17.5',
+  '∅':'M10 4 C4.5 4 3 8.5 3 11 C3 15 6 18 10 18 C14.5 18 17 14.5 17 11 C17 7 14.5 4 10 4 M16.5 2 L3.5 20',
+  '⊂':'M17 5 C6 4 3.5 8 3.5 11 C3.5 14 6 18 17 17'};
+const ROOT_PATH='M0.5 14 L3 12.6 L6 22.6 L9.6 1';
+const PEN='<svg class="bd-pen" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27 L8.5 19.5 L23.5 4.5 L27.5 8.5 L12.5 23.5 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5 27 L8.5 19.5 L12.5 23.5 Z" fill="currentColor"/></svg>';
+
+/* ---------- markup -> html ---------- */
+function md(src,words){
+  const s=String(src);let i=0;
+  const glyph=ch=>`<svg class="bd-g" viewBox="0 0 20 22" aria-hidden="true"><path d="${GL[ch]}"/></svg><span class="bd-sr">${ch}</span>`;
+  const emit=ch=>GL[ch]?glyph(ch):(ch==='-'&&!words)?'−':esc(ch);
+  // the radicand sits in an inline .bd-rbi INSIDE the flex box .bd-rb (glance 2026-09-12: a power that is a direct flex child
+  // ignores vertical-align and would print √3² as "32")
+  const root=(n,a)=>`<span class="bd-rt">${n?`<span class="bd-ri">${n}</span>`:''}<svg viewBox="0 0 10 24" preserveAspectRatio="none" aria-hidden="true"><path d="${ROOT_PATH}"/></svg><span class="bd-rb"><span class="bd-rbi">${a}</span></span></span>`;
+  function arg(script){
+    if(s[i]==='{'){i++;return seq('}');}
+    if(s[i]==='('&&!script){let d=0,j=i;for(;j<s.length;j++){if(s[j]==='(')d++;else if(s[j]===')'&&--d===0)break;}const inner=s.slice(i+1,j);i=j+1;return md(inner,words);}
+    const m=/^[-−]?(?:\d+(?:,\d+)?|[A-Za-zα-ωπ])/.exec(s.slice(i));
+    if(m){i+=m[0].length;return m[0].split('').map(emit).join('');}
+    const ch=s[i++]||'';return emit(ch);
+  }
+  function seq(stop){
+    let h='';
+    while(i<s.length){
+      const ch=s[i];
+      if(stop&&ch===stop){i++;return h;}
+      if(ch==='\\'&&s[i+1]==='f'&&s[i+2]==='{'){i+=2;const a=arg(),b=arg();h+=`<span class="bd-fr"><span class="bd-nu">${a}</span><span class="bd-de">${b}</span></span>`;continue;}
+      if(ch==='\\'&&s[i+1]==='r'&&(s[i+2]==='{'||s[i+2]==='[')){i+=2;let n='';if(s[i]==='['){i++;n=seq(']');}h+=root(n,arg());continue;}
+      if(ch==='√'){i++;let n='';if(s[i]==='['){i++;n=seq(']');}h+=root(n,arg());continue;}
+      if((ch==='^'||ch==='_')&&i+1<s.length){i++;const a=arg(true);h+=ch==='^'?`<sup>${a}</sup>`:`<sub>${a}</sub>`;continue;}
+      if(ch==='['&&s[i+1]==='#'){const m=/^\[#([\w-]+) ?/.exec(s.slice(i));if(m){i+=m[0].length;h+=`<span class="bd-id" data-id="${m[1]}">${seq(']')}</span>`;continue;}}
+      if(SUP[ch]){let r='';while(i<s.length&&SUP[s[i]])r+=SUP[s[i++]];h+=`<sup>${r.split('').map(emit).join('')}</sup>`;continue;}
+      if(SUB[ch]){let r='';while(i<s.length&&SUB[s[i]])r+=SUB[s[i++]];h+=`<sub>${esc(r)}</sub>`;continue;}
+      h+=emit(ch);i++;
+    }
+    return h;
+  }
+  return seq(null);
+}
+/* explanation text: plain HTML with $math$ segments in the same hand as the board */
+const say=t=>String(t||'').replace(/\$([^$]+)\$/g,(m,x)=>`<span class="bd-im">${md(x)}</span>`);
+/* calculator strip: abstract key tokens rendered with
+   the calculator family from tools/calc.py (KEYMAP inlined by topic.py); tapping the strip lights the keys in order. */
+const KEYMAP={"family":"bet kuris mokslinis skaičiuotuvas be tekstinės atminties (universalūs klavišai, skliaustai vietoj langelių)","keys":{"0":["0"],"1":["1"],"2":["2"],"3":["3"],"4":["4"],"5":["5"],"6":["6"],"7":["7"],"8":["8"],"9":["9"],".":[".",null,"dešimtainis kablelis – klavišas . (arba ,)"],"+":["+"],"-":["−"],"×":["×"],"÷":["÷"],"(":["("],")":[")"],"=":["="],"neg":["(−)",null,"neigiamo skaičiaus klavišas: (−) arba +/−, ne atimties minusas"],"x2":["x²"],"x3":["x³",null,"jei tokio klavišo nėra: xʸ 3"],"inv":["x⁻¹",null,"arba 1/x"],"pow":["xʸ",null,"laipsnio klavišas: xʸ, ^ arba x■; trupmeninį ar neigiamą rodiklį rašyk skliaustuose"],"sqrt":["√"],"cbrt":["∛",null,"jei tokio klavišo nėra: xʸ ( 1 ÷ 3 )"],"log":["log",null,"lg – dešimtainis logaritmas"],"ln":["ln"],"abs":["Abs",null,"modulis; jei klavišo nėra – suskaičiuok skliaustus ir numesk minusą"],"ans":["Ans",null,"paskutinis rezultatas"],"E":["EXP",null,"×10ⁿ: klavišas EXP, EE arba ×10■"],"pi":["π"],"AC":["AC"]}};
+function keyHtml(t){const km=KEYMAP&&KEYMAP.keys[t];if(!km)return `<kbd class="ck">${esc(t)}</kbd>`;const hint=km[2]?` title="${esc(km[2])}"`:'';
+  if(km[1])return `<kbd class="ck ck-s">SHIFT</kbd><kbd class="ck"${hint}>${esc(km[0])}<i>${esc(km[1])}</i></kbd>`;
+  return `<kbd class="ck${(t==='▶'||t==='▼')?' ck-a':''}"${hint}>${esc(km[0])}</kbd>`;}
+/* the strip is a STEPPER advanced by hand, one key at a time, with no timer; every key (SHIFT included) is one step. */
+const CT={lt:{go:'Po vieną klavišą ▶',press:'Spausk',next:'Kitas klavišas →',again:'Iš naujo',disp:'Ekrane:',of:'iš',title:'Klavišai po vieną – tu pats spaudi „Kitas“'},
+          en:{go:'One key at a time ▶',press:'Press',next:'Next key →',again:'Start again',disp:'Display:',of:'of',title:'One key at a time – you press "Next" yourself'}};
+function calcHtml(c,lang){if(!c||!Array.isArray(c.k))return '';const en=lang==='en',t=CT[en?'en':'lt'];
+  return `<div class="bd-calc" data-calc="1" data-lang="${en?'en':'lt'}" title="${t.title}"><b>🔢 ${en?'On the calculator.':'Skaičiuotuve.'}</b> <span class="ckeys">${c.k.map(keyHtml).join('')}</span><span class="cd">→ ${esc(c.d)}</span>${c.n?`<span class="cn">${esc(c.n)}</span>`:''}`+
+    `<div class="cstep"><button type="button" class="cs-go">${t.go}</button><span class="cs-now" hidden><span class="cs-i"></span> <span class="cs-say">${t.press}</span> <span class="cs-k"></span></span><button type="button" class="cs-next" hidden>${t.next}</button><button type="button" class="cs-reset" hidden>${t.again}</button></div></div>`;}
+function stepCalc(el,target){const t=CT[el.dataset.lang==='en'?'en':'lt'];const keys=[...el.querySelectorAll('.ckeys .ck')];
+  const q=s=>el.querySelector(s);const go=q('.cs-go'),now=q('.cs-now'),nxt=q('.cs-next'),rst=q('.cs-reset'),ki=q('.cs-i'),ks=q('.cs-say'),kk=q('.cs-k');
+  if(!keys.length||!go)return;
+  const reset=()=>{keys.forEach(k=>k.classList.remove('lit','done'));el._i=undefined;go.hidden=false;now.hidden=true;nxt.hidden=true;rst.hidden=true;};
+  if(target&&target.closest&&target.closest('.cs-reset')){reset();go.focus();return;}
+  const i=el._i==null?0:el._i+1;el._i=i;
+  keys.forEach((k,j)=>{k.classList.toggle('done',j<i);k.classList.toggle('lit',j===i);});
+  go.hidden=true;now.hidden=false;rst.hidden=false;
+  if(i<keys.length){ki.textContent=`${i+1} ${t.of} ${keys.length}`;ks.textContent=t.press;kk.innerHTML=keys[i].outerHTML.replace(/ class="ck/,' class="ck big');nxt.hidden=false;nxt.focus({preventScroll:true});}
+  else{ki.textContent='✓';ks.textContent=t.disp;kk.innerHTML=`<span class="cd">${esc((q('.cd')||{}).textContent||'')}</span>`;nxt.hidden=true;rst.focus({preventScroll:true});}}
+const playCalc=stepCalc;   // the hub calls this name: a tap anywhere on the strip is one step forward, never a timed replay
+function wireCalc(scope){scope.querySelectorAll('[data-calc]').forEach(el=>{el.onclick=e=>{e.stopPropagation();stepCalc(el,e.target);};el.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&!e.target.closest('button')){e.preventDefault();stepCalc(el,e.target);}};});}
+function lineEl(src){
+  const words=/^~/.test(src),body=words?src.replace(/^~\s?/,''):src;
+  const el=document.createElement('div');
+  el.className='bd-l'+(words?' bd-txt':'');
+  if(/^\s*Ats\./.test(body))el.dataset.ans='1';
+  el.innerHTML=`<span class="bd-in">${md(body,words)}</span>`;
+  return el;
+}
+const linesOf=st=>st.w==null?[]:(Array.isArray(st.w)?st.w:[st.w]);
+
+/* ---------- drawing helpers shared by both players ---------- */
+function Sheet(root){
+  const paper=document.createElement('div');paper.className='bd-paper';
+  const sheet=document.createElement('div');sheet.className='bd-sheet';
+  sheet.innerHTML=`<svg class="bd-ov" aria-hidden="true"></svg><div class="bd-lines"></div><div class="bd-notes"></div>${PEN}`;
+  paper.appendChild(sheet);root.appendChild(paper);
+  const ov=sheet.querySelector('.bd-ov'),lines=sheet.querySelector('.bd-lines'),notes=sheet.querySelector('.bd-notes'),pen=sheet.querySelector('.bd-pen');
+  let anims=[];
+  const S={sheet,lines,
+    clear(){lines.innerHTML='';notes.innerHTML='';ov.innerHTML='';},
+    fit(){ov.setAttribute('width',sheet.scrollWidth);ov.setAttribute('height',sheet.scrollHeight);ov.setAttribute('viewBox',`0 0 ${sheet.scrollWidth} ${sheet.scrollHeight}`);},
+    rel(el){const a=sheet.getBoundingClientRect(),r=el.getBoundingClientRect();return {x:r.left-a.left,y:r.top-a.top,w:r.width,h:r.height};},
+    finish(){anims.forEach(a=>{try{a.finish();}catch(e){}});anims=[];},
+    busy(){return anims.some(a=>a.playState==='running'||a.playState==='pending');},
+    write(el,speed){
+      if(reduced()||!speed||!el.animate)return Promise.resolve();
+      const n=Math.max(1,el.textContent.replace(/\s+/g,'').length),dur=Math.max(420,Math.min(2600,n*70))/speed;
+      const a=el.animate([{clipPath:'inset(-6px 100% -6px -6px)'},{clipPath:'inset(-6px -6px -6px -6px)'}],{duration:dur,easing:'linear',fill:'backwards'});
+      const b=S.rel(el.querySelector('.bd-in')||el),kf=[];
+      for(let q=0;q<=12;q++)kf.push({opacity:q===12?0:1,transform:`translate(${(b.x+b.w*q/12-5).toFixed(1)}px,${(b.y+b.h-24+(q%2?-3:2)).toFixed(1)}px)`});
+      const p=pen.animate(kf,{duration:dur,easing:'linear'});
+      anims.push(a,p);
+      return a.finished.then(()=>{},()=>{});
+    },
+    mark(m,speed,upto){
+      const [type,id,note,col]=m;
+      const stepOf=e=>{const l=e.closest('.bd-l');return l?+l.dataset.step:0;};
+      const targets=[...sheet.querySelectorAll('.bd-id')].filter(e=>e.dataset.id===id&&(upto==null||stepOf(e)<=upto));
+      if(!targets.length)return Promise.resolve();
+      const b=S.rel(targets[targets.length-1]);S.fit();
+      const d=path(type,b);
+      const ns='http://www.w3.org/2000/svg',el=document.createElementNS(ns,'path');
+      el.setAttribute('d',d);if(col==='g')el.setAttribute('class','g');ov.appendChild(el);
+      if(note){const t=document.createElement('div');t.className='bd-note'+(col==='g'?' g':'');t.innerHTML=md(note);
+        const lift=type==='o'?31:23,above=b.y>lift;t.style.left=(b.x+b.w/2)+'px';t.style.top=(above?b.y-lift:b.y+b.h+(type==='o'?10:4))+'px';notes.appendChild(t);
+        if(speed&&!reduced()&&t.animate)anims.push(t.animate([{opacity:0,transform:'translateX(-50%) translateY(4px)'},{opacity:1,transform:'translateX(-50%)'}],{duration:320/speed,delay:260/speed,fill:'backwards'}));}
+      if(!speed||reduced()||!el.animate)return Promise.resolve();
+      const L=el.getTotalLength();el.style.strokeDasharray=L+' '+L;
+      const a=el.animate([{strokeDashoffset:L},{strokeDashoffset:0}],{duration:460/speed,easing:'ease-out',fill:'both'});
+      anims.push(a);
+      return a.finished.then(()=>{},()=>{});
+    },
+    ansLine(el,speed){const b=S.rel(el.querySelector('.bd-in')||el);return S.markBox(`M${b.x-3} ${b.y+b.h+3} Q${b.x+b.w/2} ${b.y+b.h+6} ${b.x+b.w+4} ${b.y+b.h+2} M${b.x-1} ${b.y+b.h+8} Q${b.x+b.w/2} ${b.y+b.h+11} ${b.x+b.w+2} ${b.y+b.h+7}`,speed);},
+    markBox(d,speed){S.fit();const el=document.createElementNS('http://www.w3.org/2000/svg','path');el.setAttribute('d',d);ov.appendChild(el);
+      if(!speed||reduced()||!el.animate)return Promise.resolve();const L=el.getTotalLength();el.style.strokeDasharray=L+' '+L;
+      const a=el.animate([{strokeDashoffset:L},{strokeDashoffset:0}],{duration:420/speed,easing:'ease-out',fill:'both'});anims.push(a);return a.finished.then(()=>{},()=>{});}
+  };
+  return S;
+}
+function path(type,b){
+  const {x,y,w,h}=b;
+  if(type==='o'){const cx=x+w/2,cy=y+h/2,rx=w/2+9,ry=h/2+6;let d='';
+    for(let q=0;q<=32;q++){const a=-2.3+q*(2*Math.PI+0.55)/32,k=1+0.035*Math.sin(q*1.9);d+=(q?'L':'M')+(cx+rx*k*Math.cos(a)).toFixed(1)+' '+(cy+ry*k*Math.sin(a)).toFixed(1)+' ';}
+    return d;}
+  if(type==='x')return `M${x-3} ${y+h*.8} Q${x+w*.5} ${y+h*.56} ${x+w+3} ${y+h*.18}`;
+  if(type==='u')return `M${x-2} ${y+h+2} Q${x+w*.5} ${y+h+6} ${x+w+3} ${y+h+1}`;
+  return `M${x-6} ${y-3} L${x+w+6} ${y-4.5} L${x+w+5} ${y+h+4} L${x-5.5} ${y+h+3} Z`;
+}
+function whenFonts(){
+  if(!document.fonts||!document.fonts.load)return Promise.resolve();
+  return Promise.race([Promise.all([document.fonts.load('600 31px Caveat'),document.fonts.load('600 15px "Shantell Sans"')]).catch(()=>{}),new Promise(r=>setTimeout(r,1500))]);
+}
+
+/* ---------- the worked-solution player ---------- */
+function mount(root,steps,opt){
+  if(!root||!Array.isArray(steps)||!steps.length||root.dataset.bdOn)return;
+  opt=opt||{};root.dataset.bdOn='1';root.classList.add('bd');root.innerHTML='';
+  root.addEventListener('click',e=>e.stopPropagation());
+  root.addEventListener('keydown',e=>e.stopPropagation());
+  const n=steps.length,S=Sheet(root);
+  const askEl=document.createElement('div');askEl.className='bd-ask';askEl.hidden=true;root.appendChild(askEl);
+  const sayEl=document.createElement('div');sayEl.className='bd-say';sayEl.setAttribute('aria-live','polite');root.appendChild(sayEl);
+  const ctl=document.createElement('div');ctl.className='bd-ctl';
+  const MODES=['Žiūriu','Užbaigiu pats','Sprendžiu pats'];
+  ctl.innerHTML=`<button class="bd-b" data-a="back" aria-label="Žingsnis atgal">◀</button><button class="bd-b pri" data-a="next"></button><button class="bd-b" data-a="all">Visas sprendimas ⏭</button>`+
+    `<div class="bd-modes" role="group" aria-label="Kiek darai pats">${MODES.map((t,j)=>`<button class="bd-b bd-m" data-m="${j}" aria-pressed="false">${t}</button>`).join('')}</div>`;
+  root.appendChild(ctl);
+  const dots=document.createElement('div');dots.className='bd-dots';
+  dots.innerHTML=steps.map((s,j)=>`<button class="bd-dot" data-d="${j}" aria-label="Žingsnis ${j+1}">${j+1}</button>`).join('');
+  root.appendChild(dots);
+  const bNext=ctl.querySelector('[data-a="next"]'),bBack=ctl.querySelector('[data-a="back"]');
+  let level=Math.max(0,Math.min(2,opt.level|0)),k=0,pending=-1,run=0,revealed={},asked={};
+  const hideFrom=()=>level===0?n:level===2?Math.min(1,n-1):Math.max(1,n-Math.ceil((n-1)/2));
+  const mine=j=>j>=hideFrom()&&!revealed[j];
+
+  function explain(j){
+    if(j<0){sayEl.innerHTML=`<div class="bd-k">Sprendimas ranka · ${n} žingsn.</div><p>${level===2?'Pirma išspręsk visą užduotį ant lapo, tik tada tikrinkis.':level===1?'Pradžią parodysiu, paskutinius žingsnius parašysi pats.':'Spausk „Pradėti“ – sprendimas rašomas ranka po vieną žingsnį: ką darau, kodėl ir kaip greičiausiai suskaičiuoti mintyse.'}</p>`;return;}
+    const s=steps[j];
+    sayEl.innerHTML=`<div class="bd-k">Žingsnis ${j+1} iš ${n}</div>${s.do?`<p><b>Ką darau.</b> ${say(s.do)}</p>`:''}${s.why?`<p><b>Kodėl.</b> ${say(s.why)}</p>`:''}${s.mind?`<p class="bd-mind"><b>🧠 Mintyse.</b> ${say(s.mind)}</p>`:''}${s.calc?calcHtml(s.calc):''}`;
+    wireCalc(sayEl);
+  }
+  function yourTurn(j){
+    const s=steps[j],solo=level===2;
+    const el=document.createElement('div');el.className='bd-l bd-blank';el.dataset.blank='1';
+    el.textContent=solo?'✎ Tavo sprendimas – parašyk jį visą ant lapo':'✎ Tavo eilė – parašyk šį žingsnį ant lapo';
+    S.lines.appendChild(el);
+    sayEl.innerHTML=`<div class="bd-k">${solo?'Visa užduotis – tavo':'Žingsnis '+(j+1)+' iš '+n+' – tavo eilė'}</div><p>${solo?'Išspręsk iki atsakymo, tada spausk „Tikrinti“ ir žiūrėk, kur sutampa.':'Pirma parašyk pats, tada spausk „Tikrinti“.'}</p>`+
+      (s.do&&!solo?`<p><button class="bd-b" data-hint="1">Užuomina</button></p>`:'');
+    const h=sayEl.querySelector('[data-hint]');if(h)h.onclick=()=>{h.parentNode.innerHTML=`<b>Užuomina.</b> ${say(s.do)}`;};
+  }
+  function label(){
+    dots.querySelectorAll('.bd-dot').forEach((d,j)=>{d.classList.toggle('on',j<k);d.classList.toggle('cur',j===k-1);d.classList.toggle('me',j>=hideFrom());});
+    ctl.querySelectorAll('.bd-m').forEach((b,j)=>b.setAttribute('aria-pressed',String(j===level)));
+    bBack.disabled=k===0&&pending<0;bNext.disabled=false;
+    if(pending>=0)bNext.textContent='Tikrinti ✓';
+    else if(k===0)bNext.textContent=level===2?'Pradėti ▶':'Pradėti ▶';
+    else if(k>=n)bNext.textContent='Iš naujo ⟲';
+    else bNext.textContent=mine(k)?'Mano eilė ✎':'Kitas žingsnis ▶';
+  }
+  function drawStatic(upto){
+    S.finish();run++;askEl.hidden=true;S.clear();
+    for(let j=0;j<upto;j++)addLines(j);
+    S.fit();
+    for(let j=0;j<upto;j++){(steps[j].marks||[]).forEach(m=>S.mark(m,0,j));S.lines.querySelectorAll(`[data-step="${j}"][data-ans]`).forEach(el=>S.ansLine(el,0));}
+    k=upto;
+    if(pending>=0)yourTurn(pending);else explain(upto-1);
+    label();
+  }
+  function addLines(j){
+    const out=[];
+    if(steps[j].svg){const f=document.createElement('div');f.className='bd-l bd-fig';f.dataset.step=j;f.innerHTML=steps[j].svg;S.lines.appendChild(f);out.push(f);}
+    linesOf(steps[j]).forEach((src,li)=>{const el=lineEl(src);el.dataset.step=j;
+      if(li===0){const num=document.createElement('span');num.className='bd-num';num.textContent=(j+1)+')';el.appendChild(num);}
+      S.lines.appendChild(el);out.push(el);});
+    return out;
+  }
+  async function play(j,speed){
+    const my=++run;askEl.hidden=true;
+    const blank=S.lines.querySelector('[data-blank]');if(blank)blank.remove();
+    k=j+1;label();
+    const els=addLines(j);S.fit();
+    for(const el of els){await S.write(el,speed);if(my!==run)return;}
+    for(const m of (steps[j].marks||[])){await S.mark(m,speed,j);if(my!==run)return;}
+    for(const el of els)if(el.dataset.ans){await S.ansLine(el,speed);if(my!==run)return;}
+    explain(j);label();
+  }
+  function ask(j){
+    const q=steps[j].ask;asked[j]=true;askEl.hidden=false;
+    askEl.innerHTML=`<div class="bd-k">Spėk prieš žiūrėdamas</div><p>${say(q.q||'Koks kitas žingsnis?')}</p>${q.o.map((o,i)=>`<button class="bd-o" data-o="${i}">${say(o)}</button>`).join('')}<p><button class="bd-b" data-o="skip">Praleisti</button></p>`;
+    bNext.disabled=true;
+    askEl.onclick=e=>{const b=e.target.closest('[data-o]');if(!b)return;
+      if(b.dataset.o==='skip'){bNext.disabled=false;play(j,1);return;}
+      const i=+b.dataset.o,ok=i===q.r;
+      askEl.querySelectorAll('.bd-o').forEach((x,xi)=>{x.disabled=true;if(xi===q.r)x.classList.add('ok');else if(xi===i)x.classList.add('no');});
+      const fb=document.createElement('p');fb.innerHTML=ok?'<b>Taip!</b> Žiūrėk, kaip tai atrodo ant lapo.':'<b>Ne visai</b> – teisingas pažymėtas žaliai. Žiūrėk, kodėl.';askEl.appendChild(fb);
+      setTimeout(()=>{bNext.disabled=false;play(j,1);},ok?900:1900);};
+  }
+  function next(){
+    if(S.busy()){S.finish();return;}
+    if(pending>=0){const j=pending;pending=-1;if(level===2){for(let x=j;x<n;x++)revealed[x]=true;playFrom(j);}else{revealed[j]=true;play(j,1);}return;}
+    if(k>=n){reset();return;}
+    const j=k;
+    if(mine(j)){pending=j;yourTurn(j);label();return;}
+    if(steps[j].ask&&!asked[j]){ask(j);return;}   // any watched step predicts first (round 6)
+    play(j,1);
+  }
+  async function playFrom(j){const my=run+1;for(let x=j;x<n;x++){await play(x,2.2);if(run!==my+(x-j))return;}}
+  function reset(){pending=-1;revealed={};asked={};drawStatic(0);explain(-1);label();}
+  bNext.onclick=next;
+  bBack.onclick=()=>{if(pending>=0){pending=-1;drawStatic(k);return;}if(k>0){drawStatic(k-1);}};
+  ctl.querySelector('[data-a="all"]').onclick=()=>{pending=-1;for(let x=0;x<n;x++)revealed[x]=true;drawStatic(n);};
+  ctl.querySelectorAll('.bd-m').forEach(b=>b.onclick=()=>{level=+b.dataset.m;reset();if(opt.onLevel)opt.onLevel(level);});
+  dots.onclick=e=>{const d=e.target.closest('[data-d]');if(!d)return;const j=+d.dataset.d;pending=-1;for(let x=0;x<=j;x++)revealed[x]=true;drawStatic(j+1);};
+  let rt=0;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(root.isConnected&&!S.busy()&&k>0)drawStatic(k);},200);});
+  explain(-1);label();
+  whenFonts().then(()=>{if(opt.autoplay!==false&&level<2&&k===0)play(0,1);else if(k===0&&level===2){play(0,0).then(()=>{pending=1<n?1:-1;if(pending>=0)yourTurn(1);label();});}});
+}
+
+/* ---------- "Rask klaidą": an erroneous worked example (Große & Renkl 2007) ---------- */
+function mistake(root,item,opt){
+  if(!root||!item||!Array.isArray(item.board)||root.dataset.bdOn)return;
+  opt=opt||{};root.dataset.bdOn='1';root.classList.add('bd');root.innerHTML='';
+  root.addEventListener('click',e=>e.stopPropagation());
+  const S=Sheet(root);
+  const sayEl=document.createElement('div');sayEl.className='bd-say';sayEl.setAttribute('aria-live','polite');root.appendChild(sayEl);
+  let tries=0,done=false;
+  sayEl.innerHTML=`<div class="bd-k">Rask klaidą</div><p>Vienas žingsnis neteisingas. Spausk eilutę, kurioje suklysta – turi vieną bandymą.</p>`;
+  function draw(){
+    S.clear();
+    item.board.forEach((st,j)=>linesOf(st).forEach((src,li)=>{const el=lineEl(src);el.dataset.step=j;
+      if(j>0&&!done){el.classList.add('bd-click');el.tabIndex=0;el.setAttribute('role','button');}
+      if(li===0){const num=document.createElement('span');num.className='bd-num';num.textContent=(j+1)+')';el.appendChild(num);}
+      S.lines.appendChild(el);}));
+    S.fit();
+  }
+  async function reveal(ok){
+    done=true;S.sheet.querySelector('.bd-notes').innerHTML='';S.lines.querySelectorAll('.bd-click').forEach(el=>{el.classList.remove('bd-click');el.removeAttribute('tabindex');el.removeAttribute('role');});
+    // reviewer 2026-09-10: everything that followed from the error is wrong too - dim it, strike the bad step, and write the
+    // corrected continuation in green through to its own Ats.: so the last answer on the paper is the right one
+    [...S.lines.querySelectorAll('.bd-l')].filter(el=>+el.dataset.step>=item.bad).forEach(el=>{el.classList.add('bd-wrong');
+      if(+el.dataset.step===item.bad){el.classList.add('bd-bad');const b=S.rel(el.querySelector('.bd-in'));S.markBox(`M${b.x-3} ${b.y+b.h*.72} Q${b.x+b.w/2} ${b.y+b.h*.5} ${b.x+b.w+3} ${b.y+b.h*.25}`,1);}});
+    const fixes=(Array.isArray(item.fix)?item.fix:[item.fix]).map(src=>{const el=lineEl(src);el.classList.add('bd-fix');S.lines.appendChild(el);return el;});
+    S.fit();
+    sayEl.innerHTML=`<div class="bd-k">${ok?'Radai iš pirmo karto ✓':'Klaida buvo '+(item.bad+1)+' žingsnyje'}</div><p><b>Kas negerai.</b> ${say(item.e)}</p>${item.tip?`<p class="bd-mind"><b>🧠 Kaip neapsigauti.</b> ${say(item.tip)}</p>`:''}`;
+    if(opt.onResult)opt.onResult(ok);
+    for(const el of fixes)await S.write(el,1);
+    for(const el of fixes)if(el.dataset.ans){await S.ansLine(el,1);const ov=S.sheet.querySelector('.bd-ov');if(ov.lastChild)ov.lastChild.setAttribute('class','g');}
+  }
+  function pick(el){
+    if(done||!el)return;const j=+el.dataset.step;
+    if(j===item.bad){reveal(tries===0);return;}
+    tries++;el.classList.add('bd-shake');setTimeout(()=>el.classList.remove('bd-shake'),600);
+    const b=S.rel(el.querySelector('.bd-in'));const t=document.createElement('div');t.className='bd-note g';t.textContent='✓ teisinga';t.style.left=(b.x+b.w+44)+'px';t.style.top=(b.y+b.h/2-11)+'px';S.sheet.querySelector('.bd-notes').appendChild(t);
+    if(tries>=1)reveal(false);
+    else sayEl.innerHTML=`<div class="bd-k">Rask klaidą</div><p>Ši eilutė teisinga. Patikrink kitą – skaičiuok pats, nežiūrėdamas į jau parašytą.</p>`;
+  }
+  S.lines.addEventListener('click',e=>pick(e.target.closest('.bd-click')));
+  S.lines.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(e.target.closest('.bd-click'));}});
+  whenFonts().then(draw);
+}
+
+window.Board={mount,mistake,md,calcHtml,playCalc,wireCalc};
+})();
+</script>
+<script>
+(function(){
+const EMBED = /*__FOCUS__*/null;
+
+function boot(data){
+  if(!data){document.getElementById('built').textContent='Duomenų nėra.';return;}
+  const U=data.units||{}, TOPICS=data.topics||{}, DL=(data.deadlines||[]).slice();
+  const SCALE=data.scale||{};
+  const TESTS=(data.tests||[]);
+  const byId={}; TESTS.forEach(t=>byId[t.id]=t);
+  const DEFAULT_MARK=String(data.defaultMark||'8');
+  const SUBJ={biologija:'Biologija',matematika:'Matematika',lietuviu:'Lietuvių',anglu:'Anglų',geografija:'Geografija'};
+
+  const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const SAFE_TAGS_REMOVE=['SCRIPT','IFRAME','OBJECT','EMBED','LINK','META','STYLE','BASE','FORM','FOREIGNOBJECT'];
+  function sanitize(html){
+    try{
+      const doc=new DOMParser().parseFromString('<div id="root">'+String(html==null?'':html)+'</div>','text/html');
+      const root=doc.body&&doc.body.firstChild;
+      if(!root)return '';
+      root.querySelectorAll('*').forEach(el=>{
+        if(SAFE_TAGS_REMOVE.indexOf(el.tagName.toUpperCase())!==-1)el.remove();
+      });
+      root.querySelectorAll('*').forEach(el=>{
+        Array.prototype.slice.call(el.attributes).forEach(attr=>{
+          const name=attr.name.toLowerCase();
+          if(name.indexOf('on')===0){el.removeAttribute(attr.name);return;}
+          if(name==='href'||name==='src'||name==='xlink:href'){
+            const v=(attr.value||'').trim().toLowerCase();
+            if(v.indexOf('#')!==0&&v.indexOf('data:image/')!==0)el.removeAttribute(attr.name);
+          }
+        });
+      });
+      return root.innerHTML;
+    }catch(e){return '';}
+  }
+  // ---------- board XSS hardening: board.js writes board step text, step.svg, u.e, u.tip and mistake
+  // explanations straight into innerHTML, so nothing of a unit's board data may reach Board.mount /
+  // Board.mistake / Board.calcHtml unsanitized. Deep-clean every string in it (recursively) through the
+  // sanitize() above and cache the cleaned copy per unit id. ----------
+  const _boardSanCache=new Map();
+  function sanDeep(val){
+    if(typeof val==='string')return sanitize(val);
+    if(Array.isArray(val))return val.map(sanDeep);
+    if(val&&typeof val==='object'){
+      const out={};
+      for(const k in val){if(Object.prototype.hasOwnProperty.call(val,k))out[k]=sanDeep(val[k]);}
+      return out;
+    }
+    return val;
+  }
+  function sanUnitBoard(u){
+    if(!u)return {board:null,calc:null,bad:undefined,fix:null,e:'',tip:''};
+    if(_boardSanCache.has(u.id))return _boardSanCache.get(u.id);
+    const clean={
+      board:u.board?sanDeep(u.board):null,
+      calc:u.calc?sanDeep(u.calc):null,
+      bad:u.bad,
+      fix:u.fix!=null?sanDeep(u.fix):u.fix,
+      e:u.e!=null?sanitize(u.e):u.e,
+      tip:u.tip!=null?sanitize(u.tip):u.tip
+    };
+    _boardSanCache.set(u.id,clean);
+    return clean;
+  }
+  const pad=n=>String(n).padStart(2,'0');
+  const todayISO=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());};
+  const TODAY=todayISO();
+  const dayDiff=(a,b)=>Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5);
+  const LT_M=['sausio','vasario','kovo','balandžio','gegužės','birželio','liepos','rugpjūčio','rugsėjo','spalio','lapkričio','gruodžio'];
+  const LT_DS=['Sk','Pr','An','Tr','Kt','Pn','Št'];
+  const fmtDue=iso=>{const d=new Date(iso+'T12:00:00');return LT_M[d.getMonth()]+' '+d.getDate()+' d. ('+LT_DS[d.getDay()]+')';};
+  const relDays=dateStr=>{const n=dayDiff(TODAY,dateStr);if(n===0)return 'šiandien';if(n===1)return 'rytoj';if(n<0)return 'praėjo';return 'po '+n+' d.';};
+
+  // ---------- progress: PLANAS_STORE (site) or localStorage/sessionStorage only (PC) ----------
+  const KEY='planas.focus.v1';
+  const STORE=(window.PLANAS_EPHEMERAL===true)?sessionStorage:localStorage;
+  function newerVal(a,b){return Math.abs(b||0)>Math.abs(a||0)?(b||0):(a||0);}
+  function mergeDoneMap(a,b){const out={};for(const k of new Set([...Object.keys(a||{}),...Object.keys(b||{})]))out[k]=newerVal((a||{})[k],(b||{})[k]);return out;}
+  function mergeRecMap(a,b){const out=Object.assign({},a||{});for(const k in (b||{})){const x=out[k]||{ok:0,bad:0,last:0,lastOk:false};const y=b[k]||{};out[k]={ok:Math.max(x.ok||0,y.ok||0),bad:Math.max(x.bad||0,y.bad||0),last:Math.max(x.last||0,y.last||0),lastOk:(y.last||0)>=(x.last||0)?!!y.lastOk:!!x.lastOk};}return out;}
+  function mergeTargetsMap(a,b){const out=Object.assign({},a||{});for(const k in (b||{})){const x=out[k],y=b[k];if(!x||(y&&(y.at||0)>(x.at||0)))out[k]=y;}return out;}
+  function mergeAll(a,b){if(!b)return a;return {v:1,done:mergeDoneMap(a.done,b.done),rec:mergeRecMap(a.rec,b.rec),targets:mergeTargetsMap(a.targets,b.targets),updatedAt:Math.max(a.updatedAt||0,b.updatedAt||0)};}
+
+  let P={v:1,done:{},rec:{},targets:{},updatedAt:0};
+  try{const raw=STORE.getItem(KEY);if(raw)P=mergeAll(P,JSON.parse(raw));}catch(e){}
+  function keepLocal(){try{STORE.setItem(KEY,JSON.stringify(P));}catch(e){}}
+  function save(){P.updatedAt=Date.now();keepLocal();if(window.PLANAS_STORE)window.PLANAS_STORE.save(P);render();}
+
+  let selTest=TESTS.length?TESTS[0].id:null;
+  try{const s=STORE.getItem('planas.focus.sel');if(s&&byId[s])selTest=s;}catch(e){}
+  let hideDone=false;
+  try{hideDone=STORE.getItem('planas.focus.hidedone')==='1';}catch(e){}
+  let dlOpen=false;
+
+  // ---------- item rendering (copied and adapted from planas.template.html) ----------
+  const subjChip=s=>`<span class="chip sub s-${esc(s)}">${esc(SUBJ[s]||s)}</span>`;
+  function roomChip(topic,r){const t=TOPICS[topic];const n=t&&t.rooms&&t.rooms[r]?t.rooms[r].n.split(' = ')[0]:('Kambarys '+(r+1));return `<button class="rchip" data-room="${esc(r)}" data-topic="${esc(topic)}">🚪 ${esc(n)}</button>`;}
+  function hookChip(topic,kw){const t=TOPICS[topic];let term='';if(t&&t.rooms)for(const r of t.rooms)for(const h of (r.hooks||[]))if(h[1]===kw)term=h[0];return `<span class="hchip">${esc(kw)}${term?' → '+esc(term):''}</span>`;}
+  function memBlock(u){if(!u.rooms&&!u.hooks&&!u.s)return '';return `<div class="mem"><b>${tr(u,'Kaip įsiminti')}</b><div class="hooks">${(u.rooms||[]).map(r=>roomChip(u.topic,r)).join('')}${(u.hooks||[]).map(h=>hookChip(u.topic,h)).join('')}</div>${u.s?`<div class="ms">${esc(u.s)}</div>`:''}</div>`;}
+  const EN={'Nemoku':'Not yet','Moku':'I know','Pirma išspręsk pats, tada spausk ir pasitikrink':'Do it yourself first, then press and check','Atverti lentą ✍️':'Open the board ✍️','Užuomina: ':'Hint: ','Pirma atsakyk mintyse, tada spausk':'Answer in your head first, then press','Kodėl tikėtina: ':'Why likely: ','Prisimink atsakymą, tada pasitikrink':'Recall the answer, then check','Terminas':'Term','Kas tai?':'What is it?','Kortelė':'Card','Įrašyk atsakymą mintyse, tada spausk':'Fill in the answer in your head, then press','Kaip įsiminti':'How to remember','Moku ✓':'I know ✓'};
+  function tr(u,s){return (u&&u.lang==='en'&&EN[s])||s;}
+  function judge(uid,u){u=u||U[uid];return `<div class="judge"><button class="btn sm no" data-j="bad" data-u="${esc(uid)}">${tr(u,'Nemoku')}</button><button class="btn sm ok" data-j="ok" data-u="${esc(uid)}">${tr(u,'Moku')}</button></div>`;}
+  function calcItem(u,lab){const en=u.lang==='en';const strip=(window.Board&&Board.calcHtml)?Board.calcHtml(sanUnitBoard(u).calc,u.lang):`<div class="small">${esc(u.a)}</div>`;
+    return `<div class="item q" data-toggle="1" role="button" tabindex="0">${lab}<div class="k"><span>🔢 ${en?'Calculator drill':'Skaičiuotuvo treniruotė'}</span></div><div class="t">${esc(u.q)}</div><div class="small">${en?'Take your calculator, get the answer yourself, then press and compare the keys':'Paimk skaičiuotuvą, gauk atsakymą pats, tada spausk ir palygink klavišus'}</div><div class="a">${sanitize(strip)}${u.n?`<div class="small">${esc(u.n)}</div>`:''}${judge(u.id,u)}</div></div>`;}
+  function steps(u){return (u.steps&&u.steps.length)?`<ol class="steps">${u.steps.map(x=>`<li>${sanitize(x)}</li>`).join('')}</ol>`:'';}
+  function ab(u,mode){return (u.board&&window.Board)?`${board(u,mode)}<details class="asum"><summary>Santrauka – atsakymas žodžiais</summary>${sanitize(u.a)}</details>`:`${sanitize(u.a)}${steps(u)}`;}
+  function board(u,mode){return (u.board&&window.Board)?`<div class="bdh" data-bd="${esc(u.id)}" data-mode="${esc(mode)}"></div>`:steps(u);}
+  function qr(u){const rec=P.rec[u.id]||{},n=(u.o||[]).length,k=(u.kind==='rule'&&n)?((rec.ok||0)+(rec.bad||0))%n:0,ord=[...Array(n).keys()].map(j=>(j+k)%n);return {o:ord.map(j=>u.o[j]),r:ord.indexOf(u.r)};}
+  function levelFor(u,mode){if(mode==='new'||u.type==='practice')return 0;const r=P.rec[u.id];if(!r)return 0;return 0;}
+  function mountIn(el){if(!el)return;const bb=el.querySelector(':scope > button.btn.sm[aria-expanded]');if(bb){const op=el.classList.contains('open');bb.setAttribute('aria-expanded',String(op));bb.textContent=op?'Užverti ✕':'Atverti lentą ✍️';}if(!window.Board||!el.classList.contains('open'))return;el.querySelectorAll('[data-bd]:not([data-bd-on])').forEach(b=>{const u=U[b.dataset.bd];if(!u)return;const sc=sanUnitBoard(u);if(sc.board)Board.mount(b,sc.board,{level:levelFor(u,b.dataset.mode)});});}
+  // ---------- persist + patch only what changed (checkbox, progress line, counters) so an open quiz's marked
+  // options/explanation and an open board's mistake explanation are never wiped by a full re-render ----------
+  function saveProgress(){P.updatedAt=Date.now();keepLocal();if(window.PLANAS_STORE)window.PLANAS_STORE.save(P);}
+  function patchCheckbox(uid){
+    const row=document.querySelector('[data-frow="'+String(uid).replace(/"/g,'\\"')+'"]');
+    if(!row)return;
+    const done=isDone(uid);
+    row.classList.toggle('done',done);
+    const btn=row.querySelector('[data-check]');
+    if(btn){btn.setAttribute('aria-pressed',String(done));btn.textContent=done?'✓':'';}
+  }
+  function patchProgress(){
+    const test=byId[selTest];
+    if(!test||test.waiting||!test.order||!test.order.length)return;
+    const mark=getMark(test.id);
+    const ids=shown(test,mark);
+    const doneCount=ids.filter(isDone).length;
+    const total=ids.length;
+    const pct=total?Math.round(doneCount/total*100):0;
+    const higherMark=String(Number(mark)+1);
+    const K=(Number(mark)<10)?(shown(test,higherMark).length-total):0;
+    const box=document.getElementById('testcard');
+    if(!box)return;
+    const pl=box.querySelector('.progline');
+    if(pl)pl.textContent='Pažymiui '+mark+': '+doneCount+' iš '+total+' užduočių padaryta';
+    const bar=box.querySelector('.progbar i');
+    if(bar)bar.style.width=pct+'%';
+    let mn=box.querySelector('.moreneed');
+    if(K>0){
+      if(!mn){mn=document.createElement('div');mn.className='moreneed';const pb=box.querySelector('.progbar');if(pb&&pb.parentNode)pb.insertAdjacentElement('afterend',mn);}
+      mn.textContent='Aukštesniam pažymiui dar +'+K+' užduočių';
+    } else if(mn){mn.remove();}
+  }
+  function afterAnswer(uid){saveProgress();patchCheckbox(uid);patchProgress();renderHeader();}
+  function recUnit(uid,ok){const r=P.rec[uid]||{ok:0,bad:0,last:0,lastOk:false};if(ok){r.ok++;r.lastOk=true;}else{r.bad++;r.lastOk=false;}r.last=Date.now();P.rec[uid]=r;P.done[uid]=ok?Date.now():-Date.now();afterAnswer(uid);}
+  function mountMistakes(){if(!window.Board)return;document.querySelectorAll('[data-mk]:not([data-bd-on])').forEach(el=>{const u=U[el.dataset.mk];if(!u)return;
+    const sc=sanUnitBoard(u);
+    Board.mistake(el,{board:sc.board,bad:sc.bad,fix:sc.fix,e:sc.e,tip:sc.tip},{onResult:ok=>{recUnit(u.id,ok);}});});}
+  function label(mode,u){const L=(u&&u.lang==='en')?{new:'New'}:{new:'Užduotis'};return L[mode]||mode;}
+
+  function renderItem(it,mode){
+    const u=U[it.u]; if(!u)return '';
+    const lab=`<span data-uid="${esc(u.id)}" hidden></span><div class="k"><span>${label(mode,u)}</span>${u.type==='question'?`<span class="p" title="${u.lang==='en'?'Probability estimate from the material, not a measured frequency':'Tikimybės įvertis pagal medžiagą, ne išmatuotas dažnis'}">~${Math.round((u.w||0)*100)} % <small>${u.lang==='en'?'estimate':'įvertis'}</small></span>`:''}${u.c==='calc'?'<span title="Skaičiuotuvas daro aritmetiką">🔢 skaičiuotuvas daro</span>':u.c==='head'?'<span title="Skaičiuotuvas nepadės">🧠 reikia galvos</span>':u.c==='both'?'<span>🧠 + 🔢</span>':''}</div>`;
+    if(u.kind==='calc'&&u.calc)return calcItem(u,lab);
+    if(u.type==='practice'){
+      return `<div class="item q" data-toggle="1" ${u.board&&window.Board?'':'role="button" tabindex="0"'}>${lab}${u.t?`<div class="small">${esc(u.t)}</div>`:''}<div class="t">${esc(u.q)}</div><div class="small">${tr(u,'Pirma išspręsk pats, tada spausk ir pasitikrink')}</div>${u.board&&window.Board?`<button class="btn sm" type="button" aria-expanded="false">${tr(u,'Atverti lentą ✍️')}</button>`:''}<div class="a">${ab(u,mode)}${u.hint?`<div class="small">${tr(u,'Užuomina: ')}${esc(u.hint)}</div>`:''}${judge(u.id)}</div></div>`;
+    }
+    if(u.type==='question'){
+      return `<div class="item q" data-toggle="1" ${u.board&&window.Board?'':'role="button" tabindex="0"'}>${lab}<div class="t">${esc(u.q)}</div><div class="small">${tr(u,'Pirma atsakyk mintyse, tada spausk')}</div>${u.board&&window.Board?`<button class="btn sm" type="button" aria-expanded="false">${tr(u,'Atverti lentą ✍️')}</button>`:''}<div class="a">${ab(u,mode)}${u.why?`<div class="why">${tr(u,'Kodėl tikėtina: ')}${esc(u.why)}</div>`:''}${memBlock(u)}${judge(u.id)}</div></div>`;
+    }
+    if(u.type==='hook'){
+      const room=TOPICS[u.topic]&&TOPICS[u.topic].rooms&&TOPICS[u.topic].rooms[u.room]?TOPICS[u.topic].rooms[u.room].n.split(' = ')[0]:'';
+      return `<div class="item">${lab}<button class="flip" data-flip="1"><span class="side">${tr(u,'Terminas')} · 🚪 ${esc(room)}</span><div class="f">${esc(u.term)}</div><div class="b"><div class="kw">${esc(u.kw)}</div><div>${esc(u.img)}</div></div></button>${judge(u.id)}</div>`;
+    }
+    if(u.type==='number'){
+      return `<div class="item">${lab}<button class="tile" data-tile="1"><span>${esc(u.label)}</span><span class="v">${esc(u.value)}</span></button>${judge(u.id)}</div>`;
+    }
+    if(u.type==='card'){
+      return `<div class="item">${lab}<button class="flip" data-flip="1"><span class="side">${tr(u,'Kortelė')}</span><div class="f">${esc(u.q)}</div><div class="b">${sanitize(u.a)}</div></button>${judge(u.id)}</div>`;
+    }
+    if(u.type==='quiz'){
+      if(u.kind==='error'&&!window.Board)return `<div class="item q" data-toggle="1" role="button" tabindex="0">${lab}<div class="t">🔍 ${esc(u.s)}</div><div class="small">Klaidingo sprendimo parodyti nepavyko – spausk ir perskaityk tipinę klaidą</div><div class="a">${esc(u.e)}${u.tip?`<div class="small">${esc(u.tip)}</div>`:''}${judge(u.id)}</div></div>`;
+      if(u.kind==='error')return `<div class="item">${lab}<div class="k"><span>🔍 Rask klaidą${u.t?' · '+esc(u.t):''}</span></div><div class="t">${esc(u.s)}</div><div data-mk="${esc(u.id)}"></div></div>`;
+      if(!u.o||!u.o.length)return `<div class="item q" data-toggle="1" ${u.board&&window.Board?'':'role="button" tabindex="0"'}>${lab}<div class="t">${esc(u.s)}</div><div class="small">${tr(u,'Įrašyk atsakymą mintyse, tada spausk')}</div><div class="a">${esc(u.e)}${judge(u.id)}</div></div>`;
+      return `<div class="item quiz" data-r="${qr(u).r}" data-u="${esc(u.id)}">${lab}${u.kind==='rule'?'<div class="k"><span>🧭 Kurią taisyklę taikysi?</span></div>':''}<div class="t">${esc(u.kind==='rule'?u.s.replace(/^Kurią taisyklę taikysi\? /,''):u.s)}</div><div class="opts">${qr(u).o.map((o,i)=>`<button class="opt" data-opt="${i}">${esc(o)}</button>`).join('')}</div><div class="expl">${esc(u.e)}</div></div>`;
+    }
+    if(u.type==='vbe'){
+      return `<div class="item vbe" data-toggle="1" ${u.board&&window.Board?'':'role="button" tabindex="0"'}>${lab}<div class="k"><span>VBE ${esc(u.year)}${u.session&&u.session!=='pagrindinė'?' ('+esc(u.session)+')':''} · ${esc(u.number)} · ${esc(u.points)} t. · ${esc(u.form)}</span></div><div class="t" style="white-space:pre-line">${esc(u.question)}</div><div class="small">Atsakyk raštu ar mintyse, tada tikrink pagal vertinimo instrukciją</div><div class="a"><b>Atsakymas:</b> <span style="white-space:pre-line">${esc(u.answer)}</span><div class="small">Šaltinis: ${esc(u.source)}</div>${judge(u.id)}</div></div>`;
+    }
+    if(u.type==='mnemonic'){return `<div class="mn"><b>${esc(u.b)}</b><span>${esc(u.s)}</span></div>`;}
+    return '';
+  }
+
+  function taskText(u){return u.q||u.term||u.s||u.label||u.question||u.title||'';}
+  function isDone(uid){return (P.done[uid]||0)>0;}
+  function setDone(uid,val,noSave){P.done[uid]=val?Date.now():-Date.now();if(!noSave)save();}
+
+  function need(mark){return SCALE[String(mark)];}
+  function shown(test,mark){
+    if(test.waiting||!test.order||!test.order.length)return [];
+    const n=need(mark);const cum=test.cum||[];
+    if(n>=1.0)return test.order.slice();
+    let k=cum.findIndex(c=>c>=n-1e-9);
+    if(k<0)k=cum.length-1;
+    return test.order.slice(0,k+1);
+  }
+  function getMark(testId){const t=P.targets[testId];return (t&&t.mark)||DEFAULT_MARK;}
+  function setMark(testId,mark){P.targets[testId]={mark:String(mark),at:Date.now()};save();}
+
+  // ---------- palace ----------
+  const dlg=document.getElementById('palace');let pTopic=null,rIdx=0,recall=false;
+  function openPalace(topic,r){const t=TOPICS[topic];if(!t||!t.palaceSvg)return;pTopic=topic;document.getElementById('ptitle').textContent=(t.title||'')+' – kelias per tavo butą';document.getElementById('psvg').innerHTML=sanitize(t.palaceSvg);
+    document.querySelectorAll('#psvg .room').forEach(g=>{g.classList.add('roomg');g.onclick=()=>room(+g.dataset.r);g.onkeydown=e=>{if(e.key==='Enter')room(+g.dataset.r);};});
+    room(r||0);if(!dlg.open)dlg.showModal();}
+  function room(i){const t=TOPICS[pTopic];rIdx=i;document.querySelectorAll('#psvg .room').forEach((g,j)=>{g.classList.toggle('on',j===i);g.classList.toggle('done',j<i);});const r=t&&t.rooms&&t.rooms[i];if(!r)return;
+    const st=document.getElementById('stop');st.classList.toggle('recall',recall);
+    st.innerHTML=`<div class="eyebrow">Kambarys ${i+1} / ${t.rooms.length}</div><h3>${esc(r.n)}</h3><p class="scene">${esc(r.scene)}</p>${recall?'<p class="small">Prisimink, kas čia vyksta ir kokie žodžiai-kabliukai. Spausk terminą, kad pasitikrintum.</p>':''}${(r.hooks||[]).map(h=>`<div class="hk" tabindex="0"><span class="kw">${esc(h[0])}</span> — <span class="b"><b>${esc(h[1])}</b> · ${esc(h[2])}</span></div>`).join('')}`;
+    st.querySelectorAll('.hk').forEach(el=>{el.onclick=()=>el.classList.toggle('show');});
+    document.getElementById('walkPos').textContent=(i+1)+' / '+t.rooms.length;}
+  document.getElementById('walkNext').onclick=()=>{const t=TOPICS[pTopic];if(t)room((rIdx+1)%t.rooms.length);};
+  document.getElementById('walkMode').onclick=e=>{recall=!recall;e.target.textContent=recall?'Rodyti viską':'Iš atminties';room(rIdx);};
+  document.getElementById('walkReset').onclick=()=>room(0);
+  document.getElementById('pclose').onclick=()=>dlg.close();
+  dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
+
+  // ---------- deadlines (adapted from planas.template.html) ----------
+  const KINDL={test:'Mokykloje',exam:'Valstybinis egzaminas',assign:'Moodle darbas',quiz:'Moodle testas','online-test':'Moodle testas namuose, laikas ribotas'};
+  function dlItem(x){
+    const kind=KINDL[x.kind]||'Terminas';
+    return `<div class="it">${x.subjectName?`<span class="chip sub">${esc(x.subjectName)}</span> `:''}<span class="ttl">${esc(x.title)}</span><span class="sub2">${esc(kind)}</span></div>`;
+  }
+  function dlGroup(g){
+    const x=g[0], rel=relDays(x.date);
+    const clock=x.time?`<span class="clk">${esc(x.time)}</span>`:`<span class="nt">laikas dar nepaskelbtas</span>`;
+    return `<li><span class="when">${fmtDue(x.date)}${clock}</span><span class="what">${g.map(dlItem).join('')}</span><span class="rel">${esc(rel)}</span></li>`;
+  }
+  function dlGroups(rows){
+    const groups=[];rows.forEach(x=>{const k=x.date+'|'+(x.time||''),g=groups[groups.length-1];if(g&&g.k===k)g.push(x);else{const ng=[x];ng.k=k;groups.push(ng);}});
+    return groups;
+  }
+  function renderDeadlines(){
+    const box=document.getElementById('dl');
+    if(!DL.length){box.innerHTML='';box.className='dl';return;}
+    // the next 14 days always show; only later deadlines are collapsible, with their own toggle
+    const soon=DL.filter(x=>dayDiff(TODAY,x.date)<=14);
+    const rest=DL.filter(x=>dayDiff(TODAY,x.date)>14);
+    box.className='dl';
+    box.innerHTML=`<div class="dlh"><h3>Terminai</h3><span class="small">artimiausi, su valanda</span></div>`+
+      (soon.length?`<ul>${dlGroups(soon).map(dlGroup).join('')}</ul>`:'<p class="small">Artimiausių terminų nėra.</p>')+
+      (rest.length?`<div class="dlmore${dlOpen?'':' collapsed'}"><button class="dltog" type="button" aria-expanded="${dlOpen}">${dlOpen?'Suskleisti':'Rodyti vėlesnius ('+rest.length+')'}</button>${dlOpen?`<ul>${dlGroups(rest).map(dlGroup).join('')}</ul>`:''}</div>`:'');
+  }
+
+  // ---------- header ----------
+  function syncStatusText(){
+    if(window.PLANAS_STORE){
+      const s=window.PLANAS_STORE.status();
+      if(s==='saved')return {t:'☁ sinchronizuota',on:true};
+      if(s==='saving')return {t:'☁ siunčiama…',on:false};
+      if(s==='offline'||s==='error')return {t:'⚠ neišsaugota debesyje',on:false};
+      return {t:'išsaugota šiame įrenginyje',on:false};
+    }
+    return {t:'išsaugota šiame įrenginyje',on:false};
+  }
+  function renderHeader(){
+    const built=data.generatedAt?String(data.generatedAt).replace('T',' '):'';
+    document.getElementById('built').textContent=built?('sukurta '+built):'';
+    const s=syncStatusText();
+    const el=document.getElementById('syncbadge');el.textContent=s.t;el.classList.toggle('on',s.on);
+  }
+
+  // ---------- picker ----------
+  function tchipHtml(t){
+    const days=t.date?relDays(t.date)+(t.time?' · '+t.time:''):'data dar nepaskelbta';
+    return `<button class="tchip${t.id===selTest?' sel':''}" role="tab" aria-selected="${t.id===selTest}" data-testsel="${esc(t.id)}"><span class="sn">${esc(t.subjectName||t.subject||'')}</span><span class="tt">${esc(t.title||'')}</span><span class="rl">${esc(days)}</span></button>`;
+  }
+  function renderPicker(){
+    const box=document.getElementById('picker');
+    if(!TESTS.length){box.innerHTML='';return;}
+    box.innerHTML=TESTS.map(tchipHtml).join('');
+  }
+
+  // ---------- selected test card ----------
+  const KIND_LABEL={'online-test':'Moodle testas namuose','test':'Mokykloje','exam':'Egzaminas'};
+  function taskRow(uid){
+    const u=U[uid];if(!u)return '';
+    const done=isDone(uid);
+    if(hideDone&&done)return '';
+    return `<div class="frow${done?' done':''}" data-frow="${esc(uid)}"><button class="fcheck" type="button" data-check="${esc(uid)}" aria-pressed="${done}" aria-label="Pažymėti atlikta">${done?'✓':''}</button><div class="fbody">${subjChip(u.subject)}${renderItem({u:uid},'new')}</div></div>`;
+  }
+  function renderTestCard(){
+    const box=document.getElementById('testcard');
+    const topicsBox=document.getElementById('foot');
+    if(!TESTS.length){box.innerHTML='<p class="empty">Artimiausių testų nėra.</p>';renderDeadlines();return;}
+    const test=byId[selTest]||TESTS[0];selTest=test.id;
+    try{STORE.setItem('planas.focus.sel',selTest);}catch(e){}
+    const mark=getMark(test.id);
+    const kindLabel=KIND_LABEL[test.kind]||test.kind||'';
+    let markRow='';
+    for(let m=4;m<=10;m++){markRow+=`<button class="markbtn" type="button" data-mark="${esc(m)}" data-test="${esc(test.id)}" aria-pressed="${String(m)===String(mark)?'true':'false'}">${m}</button>`;}
+    let body='';
+    if(test.waiting||!test.order||!test.order.length){
+      body=`<div class="waitingmsg">Mokytoja dar neįkėlė medžiagos šiam testui.</div>`;
+    } else {
+      const ids=shown(test,mark);
+      const doneCount=ids.filter(isDone).length;
+      const total=ids.length;
+      const pct=total?Math.round(doneCount/total*100):0;
+      const higherMark=String(Number(mark)+1);
+      const K=(Number(mark)<10)?(shown(test,higherMark).length-total):0;
+      body=`<div class="progline">Pažymiui ${esc(mark)}: ${doneCount} iš ${total} užduočių padaryta</div>
+        <div class="progbar"><i style="width:${pct}%"></i></div>
+        ${K>0?`<div class="moreneed">Aukštesniam pažymiui dar +${K} užduočių</div>`:''}
+        <div class="hidedonewrap"><button type="button" data-hidedone="1" aria-pressed="${hideDone}">${hideDone?'Rodyti padarytas':'Slėpti padarytas'}</button></div>
+        <div class="tasklist">${ids.map(taskRow).join('')}</div>`;
+    }
+    const topicLinks=(test.topics||[]).map(id=>{
+      const t=TOPICS[id];if(!t)return '';
+      return `<button class="btn topiclink" type="button" data-opentopic="${esc(id)}">📄 ${esc(t.title||id)}</button>`;
+    }).join('');
+    box.innerHTML=`<div class="testcard">
+      <h2>${esc(test.title||'')}</h2>
+      <div class="testmeta">${test.date?esc(test.date)+(test.time?' · '+esc(test.time):''):'Tikslios datos dar nėra'} · ${esc(kindLabel)}</div>
+      <div class="markrow">${markRow}</div>
+      ${body}
+      ${topicLinks?`<div class="topicsbox"><h2>Temos puslapiai</h2><div class="topiclinks">${topicLinks}</div></div>`:''}
+    </div>`;
+    renderDeadlines();
+  }
+
+  function render(){renderHeader();renderPicker();renderTestCard();}
+
+  // ---------- events (one delegated click listener) ----------
+  document.addEventListener('click',e=>{
+    const rc=e.target.closest('.rchip');if(rc){e.preventDefault();e.stopPropagation();openPalace(rc.dataset.topic,+rc.dataset.room);return;}
+    const j=e.target.closest('[data-j]');if(j){e.stopPropagation();const uid=j.dataset.u;recUnit(uid,j.dataset.j==='ok');return;}
+    const opt=e.target.closest('.opt');if(opt){const q=opt.closest('.quiz');if(q.classList.contains('answered'))return;q.classList.add('answered');const r=+q.dataset.r;const right=+opt.dataset.opt===r;q.querySelectorAll('.opt').forEach((o,i)=>{if(i===r)o.classList.add('right');else if(o===opt)o.classList.add('wrong');});const uid=q.dataset.u;if(uid)recUnit(uid,right);return;}
+    const fl=e.target.closest('.flip');if(fl){fl.classList.toggle('on');return;}
+    const tl=e.target.closest('.tile');if(tl){tl.classList.toggle('on');return;}
+    const chk=e.target.closest('[data-check]');if(chk){e.stopPropagation();const uid=chk.dataset.check;setDone(uid,!isDone(uid));return;}
+    const mk=e.target.closest('[data-mark]');if(mk){setMark(mk.dataset.test,mk.dataset.mark);return;}
+    const ts=e.target.closest('[data-testsel]');if(ts){selTest=ts.dataset.testsel;try{STORE.setItem('planas.focus.sel',selTest);}catch(e2){}render();return;}
+    const hd=e.target.closest('[data-hidedone]');if(hd){hideDone=!hideDone;try{STORE.setItem('planas.focus.hidedone',hideDone?'1':'0');}catch(e2){}render();return;}
+    const ot=e.target.closest('[data-opentopic]');if(ot){const id=ot.dataset.opentopic;
+      if(window.PLANAS_OPEN_TOPIC){window.PLANAS_OPEN_TOPIC(id);}
+      else{const t=TOPICS[id];if(t&&t.page)window.open(t.page,'_blank','noopener');}
+      return;}
+    const dt=e.target.closest('.dltog');if(dt){dlOpen=!dlOpen;renderDeadlines();return;}
+    const cs=e.target.closest('[data-calc]');if(cs&&window.Board&&Board.playCalc){Board.playCalc(cs,e.target);return;}
+    const tg=e.target.closest('[data-toggle]');if(tg&&!e.target.closest('.judge')&&!e.target.closest('.a a')&&!e.target.closest('details')){tg.classList.toggle('open');mountIn(tg);return;}
+  });
+  document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;if(e.key==='Enter'&&e.target.matches('.item[data-toggle]')){e.target.classList.toggle('open');mountIn(e.target);return;}});
+
+  // ---------- boot: merge remote progress, then render ----------
+  (async function(){
+    if(window.PLANAS_STORE){
+      try{
+        const remote=await window.PLANAS_STORE.load();
+        if(remote)P=mergeAll(P,remote);
+        keepLocal();
+      }catch(e){}
+      if(window.PLANAS_STORE.onRemote){
+        window.PLANAS_STORE.onRemote(function(remote){P=mergeAll(P,remote);keepLocal();render();});
+      }
+    }
+    render();
+    try{let mq=0;const obs=new MutationObserver(()=>{if(!mq)mq=requestAnimationFrame(()=>{mq=0;mountMistakes();});});const n=document.getElementById('testcard');if(n)obs.observe(n,{childList:true,subtree:true});}catch(e){}
+    mountMistakes();
+  })();
+}
+
+if(EMBED!==null){
+  boot(EMBED);
+} else {
+  window.PLANAS_START=function(data){boot(data);};
+}
+})();
+</script>
+<script>
+/**
+ * client.js - browser-side client for the tiny Cloudflare Worker sync store (worker.js).
+ * Exposes a global `PlanasSync` (for the inline <script> the site shell embeds) and a
+ * CommonJS export (for tests / bundlers). See spec-site.md, "How the pieces meet", for the
+ * exact `createStore` contract this file must follow.
+ *
+ * This file never encrypts or decrypts anything itself - the caller (site_shell.js) passes
+ * in `encrypt`/`decrypt`/`merge` functions built from the derived keys, so this module never
+ * touches a password or plaintext progress data; it only moves opaque {iv, ct} blobs.
+ *
+ * Security review fixes (2026-09-28):
+ *  - Uploads are serialized: `flush()` never has two PUTs in flight. The object being sent is
+ *    snapshotted up front; if a newer `save()` arrives while that PUT is in the air, the ack
+ *    only clears the snapshot when nothing newer replaced it, otherwise the newer value is sent
+ *    next (automatically, right after the current PUT settles).
+ *  - The not-yet-uploaded change is persisted ENCRYPTED ONLY: `save()` stores the {iv, ct}
+ *    `encrypt()` returns under `planas.sync.<space>.pending`, never the plaintext object. On the
+ *    first `load()` after a `createStore()`, any persisted pending blob is read back, decrypted,
+ *    merged with whatever `load()` got from the server, and uploaded right away; the persisted
+ *    key is cleared only once that upload actually succeeds.
+ *  - A 409 merge+retry that succeeds now also calls the `onRemote` listeners with the merged
+ *    object (previously only a later poll would, and could miss it if the poll's own GET saw a
+ *    revision that already matched).
+ *
+ * Security review fixes, round 2 (2026-09-28):
+ *  - The page calls `save(obj)` repeatedly with the SAME object it keeps mutating in place, so
+ *    object identity (`pendingObj === sending`) can never tell whether a newer edit landed while
+ *    a PUT was in flight - by the time the ack comes back the "old" and "new" values are the same
+ *    reference. `save()` now takes a deep copy (`structuredClone` when available, else a JSON
+ *    round trip) before storing it, and every `save()` bumps a monotonically increasing
+ *    generation counter. An upload records the generation of the snapshot it actually sent; after
+ *    the ack, pending is cleared only when no newer generation has landed since, otherwise the
+ *    newest pending snapshot is uploaded next (still one PUT at a time). A 409's merge+retry now
+ *    merges the server copy into the NEWEST pending snapshot (not the older one that was actually
+ *    in flight), so an edit that arrived mid-flight is never lost to the conflict resolution.
+ */
+(function (root, factory) {
+  if (typeof module === "object" && module && module.exports) {
+    module.exports = factory();
+  } else {
+    root.PlanasSync = factory();
+  }
+})(typeof self !== "undefined" ? self : typeof globalThis !== "undefined" ? globalThis : this, function () {
+  function createStore(opts) {
+    const {
+      url,
+      space,
+      token,
+      encrypt,
+      decrypt,
+      merge,
+      fetch: fetchFn,
+      setTimeout: setTimeoutFn,
+      debounceMs = 20000,
+      pollMs = 60000,
+      storage,
+    } = opts || {};
+
+    // Local-only mode: nothing remote, never touches the network.
+    if (!url) {
+      return {
+        async load() {
+          return null;
+        },
+        save() {},
+        onRemote() {},
+        async flush() {},
+        status() {
+          return "off";
+        },
+      };
+    }
+
+    const base = String(url).replace(/\/$/, "");
+    const path = "/v1/s/" + space;
+    const pendingStorageKey = "planas.sync." + space + ".pending";
+
+    let localRev = 0;
+    let lastLocal = null;
+    let pendingObj = null;
+    // Bumped by every save() (and by the pending-restore in load()), so an in-flight upload can
+    // tell - once its ack comes back - whether pendingObj still is the exact snapshot it sent
+    // (same generation) or a newer save() replaced it (higher generation) while the caller's own
+    // object kept being mutated in place, which would defeat an identity check.
+    let pendingGen = 0;
+    let debounceTimer = null;
+    let uploadPromise = null;
+    let currentStatus = "saved";
+    const remoteListeners = [];
+
+    function deepCopy(obj) {
+      if (obj == null) return obj;
+      if (typeof structuredClone === "function") return structuredClone(obj);
+      return JSON.parse(JSON.stringify(obj));
+    }
+
+    function request(method, body) {
+      const headers = { Authorization: "Bearer " + token };
+      const init = { method, headers };
+      if (body !== undefined) {
+        headers["Content-Type"] = "application/json";
+        init.body = JSON.stringify(body);
+      }
+      return fetchFn(base + path, init);
+    }
+
+    async function persistPending(obj) {
+      if (!storage || !storage.setItem) return;
+      try {
+        const enc = await encrypt(obj);
+        storage.setItem(pendingStorageKey, JSON.stringify({ iv: enc.iv, ct: enc.ct }));
+      } catch (err) {
+        // ignore storage/encrypt failures (private mode, quota, etc.) - save() still queues
+        // the upload in memory, this is only the "survive a reload" mirror.
+      }
+    }
+
+    function clearPersistedPending() {
+      if (!storage || !storage.removeItem) return;
+      try {
+        storage.removeItem(pendingStorageKey);
+      } catch (err) {
+        // ignore
+      }
+    }
+
+    async function readPersistedPending() {
+      if (!storage || !storage.getItem) return null;
+      let raw;
+      try {
+        raw = storage.getItem(pendingStorageKey);
+      } catch (err) {
+        return null;
+      }
+      if (!raw) return null;
+      let parsed;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (err) {
+        return null;
+      }
+      if (!parsed || typeof parsed.iv !== "string" || typeof parsed.ct !== "string") {
+        return null;
+      }
+      try {
+        return await decrypt({ iv: parsed.iv, ct: parsed.ct });
+      } catch (err) {
+        return null;
+      }
+    }
+
+    async function load() {
+      let obj = null;
+      try {
+        const res = await request("GET");
+        if (res.status === 404) {
+          localRev = 0;
+          currentStatus = "saved";
+          obj = null;
+        } else if (!res.ok) {
+          currentStatus = "error";
+          obj = null;
+        } else {
+          const data = await res.json();
+          localRev = data.rev;
+          obj = await decrypt({ iv: data.iv, ct: data.ct });
+          lastLocal = obj;
+          currentStatus = "saved";
+        }
+      } catch (err) {
+        currentStatus = "offline";
+        obj = null;
+      }
+
+      // A change made before the last reload but never confirmed uploaded: restore, merge and
+      // send it now, per spec ("read it back, decrypt, merge and upload it after the first
+      // successful load"). The persisted key is only cleared once the upload actually succeeds.
+      const pendingRestored = await readPersistedPending();
+      if (pendingRestored != null) {
+        const merged = obj != null ? merge(obj, pendingRestored) : pendingRestored;
+        lastLocal = merged;
+        pendingObj = merged;
+        pendingGen += 1;
+        await persistPending(merged);
+        await flush();
+        return lastLocal;
+      }
+
+      return obj;
+    }
+
+    function scheduleFlush() {
+      currentStatus = "saving";
+      if (debounceTimer == null) {
+        debounceTimer = setTimeoutFn(function () {
+          debounceTimer = null;
+          return flush();
+        }, debounceMs);
+      }
+    }
+
+    function save(obj) {
+      // Deep-copy: the caller (the page) keeps mutating the SAME object across calls, so we must
+      // snapshot its current shape now, not just keep a reference that will have changed by the
+      // time an in-flight upload's ack comes back.
+      const copy = deepCopy(obj);
+      lastLocal = copy;
+      pendingObj = copy;
+      pendingGen += 1;
+      scheduleFlush();
+      return persistPending(copy);
+    }
+
+    async function putOnce(obj, baseRev) {
+      const enc = await encrypt(obj);
+      const res = await request("PUT", { baseRev: baseRev, iv: enc.iv, ct: enc.ct });
+      return res;
+    }
+
+    // Does exactly one upload cycle for whatever `pendingObj` is right now (snapshotted as
+    // `sending` before any await, so a `save()` that lands mid-flight never gets silently
+    // dropped - it is detected via `pendingObj !== sending` after the ack). Returns true only
+    // when the round trip actually completed OK (so `flush()` knows whether it is safe to
+    // immediately chase a newer pending value, versus a failure which must wait for the next
+    // explicit save() or poll() per spec, not retry itself in a tight loop).
+    // Clears `pendingObj` only when the generation it holds is still exactly the generation that
+    // was just uploaded (`sentGen`) - i.e. no `save()` landed while the upload was in flight. When
+    // a newer generation did land, `pendingObj` already holds that newest snapshot (save() always
+    // overwrites it), so leaving it set is exactly "upload the newest next": the caller (flush())
+    // loops back around and sends it.
+    function settlePending(sentGen) {
+      if (pendingGen === sentGen) {
+        pendingObj = null;
+        clearPersistedPending();
+        currentStatus = "saved";
+      } else {
+        currentStatus = "saving";
+      }
+    }
+
+    async function runUpload() {
+      let sending = pendingObj;
+      let sentGen = pendingGen;
+      currentStatus = "saving";
+      try {
+        const res = await putOnce(sending, localRev);
+        if (res.status === 409) {
+          const serverData = await res.json();
+          const serverObj = await decrypt({ iv: serverData.iv, ct: serverData.ct });
+          // Merge the server copy into the NEWEST pending state, not the older snapshot that was
+          // actually sent: a save() may have landed (on the caller's mutated object, deep-copied
+          // at that point) while this PUT was in flight, and that edit must survive the merge.
+          sending = pendingObj != null ? pendingObj : sending;
+          sentGen = pendingGen;
+          const merged = merge(sending, serverObj);
+          const res2 = await putOnce(merged, serverData.rev);
+          if (res2.ok) {
+            const data2 = await res2.json();
+            localRev = data2.rev;
+            lastLocal = merged;
+            // A save() that landed during THIS retry holds a snapshot taken before the server's ticks were
+            // merged in: fold them in now, or its upload would overwrite them without a conflict.
+            if (pendingObj != null && pendingGen !== sentGen) pendingObj = merge(pendingObj, merged);
+            settlePending(sentGen);
+            remoteListeners.forEach(function (fn) {
+              fn(merged);
+            });
+            return true;
+          }
+          currentStatus = "error";
+          return false;
+        }
+        if (!res.ok) {
+          currentStatus = "error";
+          return false;
+        }
+        const data = await res.json();
+        localRev = data.rev;
+        settlePending(sentGen);
+        return true;
+      } catch (err) {
+        currentStatus = "offline";
+        return false;
+      }
+    }
+
+    // Serializes uploads: while one is in flight, further flush() calls join the same promise
+    // instead of starting a second PUT; once it settles, if a newer save() left pendingObj set
+    // AND the round trip actually succeeded, the next upload is kicked off automatically (no
+    // need to wait another debounce cycle). A failed round trip does NOT self-retry - per spec
+    // it waits for the next save() or poll().
+    function flush() {
+      if (debounceTimer != null) {
+        debounceTimer = null;
+      }
+      if (uploadPromise) {
+        return uploadPromise;
+      }
+      if (pendingObj == null) {
+        return Promise.resolve();
+      }
+      const p = runUpload().then(function (ok) {
+        uploadPromise = null;
+        if (ok && pendingObj != null) {
+          return flush();
+        }
+      });
+      uploadPromise = p;
+      return p;
+    }
+
+    async function poll() {
+      try {
+        if (pendingObj != null) {
+          await flush();
+        }
+        const res = await request("GET");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.rev !== localRev) {
+            const remoteObj = await decrypt({ iv: data.iv, ct: data.ct });
+            const merged = merge(lastLocal || {}, remoteObj);
+            localRev = data.rev;
+            lastLocal = merged;
+            remoteListeners.forEach(function (fn) {
+              fn(merged);
+            });
+          }
+          currentStatus = pendingObj == null ? "saved" : currentStatus;
+        } else if (res.status !== 404) {
+          currentStatus = "error";
+        }
+      } catch (err) {
+        currentStatus = "offline";
+      } finally {
+        setTimeoutFn(poll, pollMs);
+      }
+    }
+    setTimeoutFn(poll, pollMs);
+
+    function onRemote(fn) {
+      remoteListeners.push(fn);
+    }
+
+    function status() {
+      return currentStatus;
+    }
+
+    if (typeof document !== "undefined" && document.addEventListener) {
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+          return flush();
+        }
+      });
+    }
+    if (typeof window !== "undefined" && window.addEventListener) {
+      window.addEventListener("pagehide", function () {
+        return flush();
+      });
+    }
+
+    return { load, save, onRemote, flush, status };
+  }
+
+  return { createStore: createStore };
+});
+
+/* site_shell.js - the public GitHub Pages page's lock screen and data loader.
+ *
+ * Concatenated by site.py, at build time, right after site-sync/client.js, into ONE <script> tag at the end of
+ * index.html (the empty shell). Nothing here is a module (plain ES2020, WebCrypto only, no libraries), so
+ * `window.PlanasSync` from client.js is already a plain variable in this same scope by the time this file runs.
+ *
+ * What it does, in order:
+ *   1. Unless a remembered key for the current salt sits in IndexedDB, shows a full-screen unlock form and keeps
+ *      the page under it hidden.
+ *   2. Fetches key.json, derives kEnc/kMac from the typed password (or the remembered CryptoKeys), checks the
+ *      "check" field decrypts to "planas-ok". A wrong password: "Neteisingas slaptažodis" + a 1 s wait.
+ *   3. Fetches + decrypts data.json, defines window.PLANAS_OPEN_TOPIC and window.PLANAS_STORE, then calls
+ *      window.PLANAS_START(data.focus) (defined by focus.template.html once its EMBED marker was left null).
+ *   4. A small fixed "Užrakinti" button deletes the remembered IndexedDB key and every sessionStorage "planas."
+ *      key always, deletes localStorage's "planas." keys too ONLY once PLANAS_STORE.status() is "saved" (see
+ *      lockCleanupPlan below - progress must never be lost while a tick has not made it to the sync store yet),
+ *      then reloads.
+ */
+(function () {
+  "use strict";
+
+  var IDB_NAME = "planas";
+  var IDB_STORE = "keys";
+  var LS_KEY = "planas.focus.v1";
+  var TOPIC_BLOB_TTL_MS = 60000;
+
+  // ---------------------------------------------------------------------------------------------- tiny helpers --
+
+  function te(s) { return new TextEncoder().encode(s); }
+  function td(buf) { return new TextDecoder().decode(buf); }
+
+  function b64ToBytes(b64) {
+    var bin = atob(b64), out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  function bytesToB64(bytes) {
+    var bin = "";
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
+  }
+  function toHex(buf) {
+    var b = new Uint8Array(buf), out = "";
+    for (var i = 0; i < b.length; i++) out += b[i].toString(16).padStart(2, "0");
+    return out;
+  }
+
+  function fetchJSON(path) {
+    return fetch(path, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error("fetch failed: " + path + " " + r.status);
+      return r.json();
+    });
+  }
+
+  // ----------------------------------------------------------------------------------------------- IndexedDB ----
+
+  function idbOpen() {
+    return new Promise(function (resolve, reject) {
+      var req = indexedDB.open(IDB_NAME, 1);
+      req.onupgradeneeded = function () {
+        if (!req.result.objectStoreNames.contains(IDB_STORE)) req.result.createObjectStore(IDB_STORE);
+      };
+      req.onsuccess = function () { resolve(req.result); };
+      req.onerror = function () { reject(req.error); };
+    });
+  }
+  function idbGet(key) {
+    return idbOpen().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction(IDB_STORE, "readonly");
+        var r = tx.objectStore(IDB_STORE).get(key);
+        r.onsuccess = function () { resolve(r.result || null); };
+        r.onerror = function () { reject(r.error); };
+      });
+    });
+  }
+  function idbPut(key, value) {
+    return idbOpen().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction(IDB_STORE, "readwrite");
+        tx.objectStore(IDB_STORE).put(value, key);
+        tx.oncomplete = function () { resolve(); };
+        tx.onerror = function () { reject(tx.error); };
+      });
+    });
+  }
+  function idbDelete(key) {
+    return idbOpen().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction(IDB_STORE, "readwrite");
+        tx.objectStore(IDB_STORE).delete(key);
+        tx.oncomplete = function () { resolve(); };
+        tx.onerror = function () { reject(tx.error); };
+      });
+    });
+  }
+  function idbClearAll() {
+    return idbOpen().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction(IDB_STORE, "readwrite");
+        tx.objectStore(IDB_STORE).clear();
+        tx.oncomplete = function () { resolve(); };
+        tx.onerror = function () { reject(tx.error); };
+      });
+    });
+  }
+
+  // -------------------------------------------------------------------------------------------------- crypto ----
+
+  function deriveKeys(password, saltBytes) {
+    return crypto.subtle.importKey("raw", te(password), { name: "PBKDF2" }, false, ["deriveBits"]).then(function (base) {
+      return crypto.subtle.deriveBits({ name: "PBKDF2", salt: saltBytes, iterations: 600000, hash: "SHA-256" }, base, 512);
+    }).then(function (bits) {
+      var all = new Uint8Array(bits);
+      var encBytes = all.slice(0, 32), macBytes = all.slice(32, 64);
+      return Promise.all([
+        crypto.subtle.importKey("raw", encBytes, { name: "AES-GCM" }, false, ["encrypt", "decrypt"]),
+        crypto.subtle.importKey("raw", macBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"])
+      ]).then(function (pair) { return { kEnc: pair[0], kMac: pair[1] }; });
+    });
+  }
+
+  function aesDecrypt(kEnc, payload, aad) {
+    var iv = b64ToBytes(payload.iv), ct = b64ToBytes(payload.ct);
+    return crypto.subtle.decrypt({ name: "AES-GCM", iv: iv, additionalData: te(aad) }, kEnc, ct).then(function (buf) {
+      return new Uint8Array(buf);
+    });
+  }
+  function aesEncrypt(kEnc, bytes, aad) {
+    var iv = crypto.getRandomValues(new Uint8Array(12));
+    return crypto.subtle.encrypt({ name: "AES-GCM", iv: iv, additionalData: te(aad) }, kEnc, bytes).then(function (buf) {
+      return { v: 1, iv: bytesToB64(iv), ct: bytesToB64(new Uint8Array(buf)) };
+    });
+  }
+  function hmacHex(kMac, msg) {
+    return crypto.subtle.sign("HMAC", kMac, te(msg)).then(toHex);
+  }
+
+  // -------------------------------------------------------------------------------------- progress merge (spec) -
+
+  function mergeProgress(a, b) {
+    a = a || {}; b = b || {};
+    var out = { v: 1, done: {}, rec: {}, targets: {}, updatedAt: Math.max(a.updatedAt || 0, b.updatedAt || 0) };
+    var uid, aid;
+    var doneKeys = Object.assign({}, a.done, b.done);
+    for (uid in doneKeys) {
+      if (!Object.prototype.hasOwnProperty.call(doneKeys, uid)) continue;
+      if (uid === "__proto__" || uid === "constructor" || uid === "prototype") continue;
+      var va = a.done ? a.done[uid] : undefined, vb = b.done ? b.done[uid] : undefined;
+      out.done[uid] = va === undefined ? vb : (vb === undefined ? va : (Math.abs(va) >= Math.abs(vb) ? va : vb));
+    }
+    var recKeys = Object.assign({}, a.rec, b.rec);
+    for (uid in recKeys) {
+      if (!Object.prototype.hasOwnProperty.call(recKeys, uid)) continue;
+      if (uid === "__proto__" || uid === "constructor" || uid === "prototype") continue;
+      var ra = a.rec ? a.rec[uid] : undefined, rb = b.rec ? b.rec[uid] : undefined;
+      out.rec[uid] = ra === undefined ? rb : (rb === undefined ? ra : (((ra.last || 0) >= (rb.last || 0)) ? ra : rb));
+    }
+    var tgKeys = Object.assign({}, a.targets, b.targets);
+    for (aid in tgKeys) {
+      if (!Object.prototype.hasOwnProperty.call(tgKeys, aid)) continue;
+      if (aid === "__proto__" || aid === "constructor" || aid === "prototype") continue;
+      var ta = a.targets ? a.targets[aid] : undefined, tb = b.targets ? b.targets[aid] : undefined;
+      out.targets[aid] = ta === undefined ? tb : (tb === undefined ? ta : (((ta.at || 0) >= (tb.at || 0)) ? ta : tb));
+    }
+    return out;
+  }
+
+  // ---------------------------------------------------------------------------------------- unlock screen (DOM) -
+
+  function buildLockScreen() {
+    var wrap = document.createElement("div");
+    wrap.id = "planas-lock";
+    wrap.style.cssText = "position:fixed;inset:0;background:#111;color:#eee;display:flex;align-items:center;" +
+      "justify-content:center;z-index:99999;font:16px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;";
+    wrap.innerHTML =
+      '<form id="planas-lock-form" style="display:flex;flex-direction:column;gap:12px;width:min(320px,90vw);">' +
+      '<div style="font-size:20px;font-weight:600;">Mokymasis</div>' +
+      '<input id="planas-lock-pw" type="password" autocomplete="current-password" placeholder="Slaptazodis" ' +
+      'style="padding:12px;font-size:16px;border-radius:8px;border:1px solid #555;background:#1c1c1c;color:#eee;">' +
+      '<label style="display:flex;gap:8px;align-items:center;min-height:40px;">' +
+      '<input id="planas-lock-remember" type="checkbox" style="width:20px;height:20px;">Prisiminti siame irenginyje</label>' +
+      '<button id="planas-lock-btn" type="submit" style="padding:12px;font-size:16px;border-radius:8px;border:0;' +
+      'background:#3a7;color:#fff;min-height:40px;">Atrakinti</button>' +
+      '<div id="planas-lock-msg" style="min-height:20px;color:#f77;"></div>' +
+      '</form>';
+    document.body.appendChild(wrap);
+    return wrap;
+  }
+
+  function removeLockScreen(wrap) {
+    if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
+  }
+
+  // Every key of a storage area, collected first (removing while indexing a live Storage shifts the remaining
+  // keys and skips some).
+  function listKeys(storageArea) {
+    var out = [];
+    if (!storageArea) return out;
+    try {
+      for (var i = 0; i < storageArea.length; i++) {
+        var k = storageArea.key(i);
+        if (k) out.push(k);
+      }
+    } catch (e) { /* ignore */ }
+    return out;
+  }
+
+  function removeKeys(storageArea, keys) {
+    for (var i = 0; i < keys.length; i++) {
+      try { storageArea.removeItem(keys[i]); } catch (e) { /* ignore */ }
+    }
+  }
+
+  // Every "planas." key (progress, the selected test, the "hide done" toggle, ...) - used for sessionStorage,
+  // which is always safe to wipe on lock: it only ever holds an EPHEMERAL copy for a device that did not tick
+  // "Prisiminti", never the device's only copy of a tick.
+  function clearPlanasKeys(storageArea) {
+    removeKeys(storageArea, listKeys(storageArea).filter(function (k) { return k.indexOf("planas.") === 0; }));
+  }
+
+  // client.js persists an edit not yet confirmed uploaded under "planas.sync.<space>.pending" (see its
+  // pendingStorageKey) until the PUT that carries it is acknowledged.
+  function isPendingSyncKey(k) {
+    return /^planas\.sync\.[^.]+\.pending$/.test(k);
+  }
+
+  // Pure planning function (no storage access) so it can be unit-tested on its own (see test_site.py's
+  // `node -e` test): given PLANAS_STORE.status() and the list of a storage area's keys, returns the keys the
+  // lock button may delete.
+  //
+  // localStorage is the page's ONLY copy of progress while sync is off, still catching up, or has failed
+  // ("off"/"saving"/"offline"/"error"): deleting it there would lose ticks with no way to get them back, so
+  // nothing is deleted in that case. Only once status() is "saved" - every tick already uploaded to the sync
+  // store - is the local copy known to be redundant and safe to drop. Even then, a "planas.sync.*.pending" key
+  // is kept: it holds an edit staged for upload but not yet confirmed by the server, so status() may say "saved"
+  // a moment before that edit's own PUT has actually landed.
+  function lockCleanupPlan(status, keys) {
+    if (status !== "saved") return [];
+    return keys.filter(function (k) { return k.indexOf("planas.") === 0 && !isPendingSyncKey(k); });
+  }
+
+  function buildLockButton() {
+    var btn = document.createElement("button");
+    btn.id = "planas-lockbtn";
+    btn.type = "button";
+    btn.textContent = "Užrakinti";
+    btn.setAttribute("aria-label", "Užrakinti");
+    btn.style.cssText = "position:fixed;bottom:calc(12px + env(safe-area-inset-bottom,0px));right:12px;z-index:9998;min-height:40px;padding:8px 12px;" +
+      "border-radius:8px;border:1px solid #999;background:#fff;color:#111;font:14px system-ui,sans-serif;";
+    btn.addEventListener("click", function () {
+      idbClearAll().catch(function () {}).then(function () {
+        clearPlanasKeys(window.sessionStorage);
+        var status = (window.PLANAS_STORE && typeof window.PLANAS_STORE.status === "function")
+          ? window.PLANAS_STORE.status() : "off";
+        removeKeys(window.localStorage, lockCleanupPlan(status, listKeys(window.localStorage)));
+        location.reload();
+      });
+    });
+    document.body.appendChild(btn);
+    return btn;
+  }
+
+  // ---------------------------------------------------------------------------------------------------- main ----
+
+  function unlockWith(keyJson, kEnc) {
+    return aesDecrypt(kEnc, keyJson.check, "key.json").then(function (bytes) {
+      if (td(bytes) !== "planas-ok") throw new Error("bad password");
+    });
+  }
+
+  function start(keyJson, kEnc, kMac, ephemeral) {
+    // Pinned: when the password was NOT remembered on this device, window.PLANAS_EPHEMERAL is set before
+    // PLANAS_START runs and the page's local copy lives in sessionStorage (gone once the tab closes) instead of
+    // localStorage; when it WAS remembered (auto-unlock from IndexedDB, or the box was just ticked), localStorage.
+    var storageArea = ephemeral ? window.sessionStorage : window.localStorage;
+    return fetchJSON("data.json").then(function (payload) {
+      return aesDecrypt(kEnc, payload, "data.json");
+    }).then(function (bytes) {
+      var data = JSON.parse(td(bytes));
+
+      window.PLANAS_OPEN_TOPIC = function (topicId) {
+        hmacHex(kMac, "topic:" + topicId).then(function (hex) {
+          var name = hex.slice(0, 16) + ".json";
+          var path = "t/" + name;
+          return fetchJSON(path).then(function (payload) { return aesDecrypt(kEnc, payload, path); });
+        }).then(function (bytes) {
+          var html = td(bytes);
+          var url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+          window.open(url, "_blank");
+          setTimeout(function () { URL.revokeObjectURL(url); }, TOPIC_BLOB_TTL_MS);
+        }).catch(function () { /* a topic page failing to open never breaks the rest of the page */ });
+      };
+
+      var syncUrl = (data.sync && data.sync.url) || "";
+      var storePromise = syncUrl
+        ? Promise.all([hmacHex(kMac, "space"), hmacHex(kMac, "token")])
+        : Promise.resolve(["", ""]);
+
+      return storePromise.then(function (pair) {
+        var space = pair[0].slice(0, 32), token = pair[1];
+        var rawStore = window.PlanasSync.createStore({
+          url: syncUrl, space: space, token: token,
+          encrypt: function (obj) { return aesEncrypt(kEnc, te(JSON.stringify(obj)), "sync:" + space); },
+          decrypt: function (payload) { return aesDecrypt(kEnc, payload, "sync:" + space).then(function (b) { return JSON.parse(td(b)); }); },
+          merge: mergeProgress,
+          fetch: window.fetch.bind(window),
+          setTimeout: window.setTimeout.bind(window),
+          storage: storageArea
+        });
+
+        window.PLANAS_STORE = {
+          load: function () {
+            return rawStore.load().catch(function () { return null; }).then(function (remote) {
+              var local = null;
+              try { var raw = storageArea.getItem(LS_KEY); local = raw ? JSON.parse(raw) : null; } catch (e) { local = null; }
+              var base = remote || local || { v: 1, done: {}, rec: {}, targets: {}, updatedAt: 0 };
+              return mergeProgress(data.seed || {}, base);
+            });
+          },
+          save: rawStore.save,
+          onRemote: rawStore.onRemote,
+          flush: rawStore.flush,
+          status: rawStore.status
+        };
+
+        window.PLANAS_EPHEMERAL = !!ephemeral;
+        if (typeof window.PLANAS_START === "function") window.PLANAS_START(data.focus);
+      });
+    });
+  }
+
+  function boot() {
+    fetchJSON("key.json").then(function (keyJson) {
+      var saltBytes = b64ToBytes(keyJson.salt);
+
+      function tryRemembered() {
+        return idbGet(keyJson.salt).then(function (rec) {
+          if (!rec) return false;
+          return unlockWith(keyJson, rec.kEnc).then(function () {
+            return start(keyJson, rec.kEnc, rec.kMac, false).then(function () { return true; });
+          }).catch(function () {
+            return idbDelete(keyJson.salt).then(function () { return false; });
+          });
+        });
+      }
+
+      tryRemembered().then(function (ok) {
+        if (ok) return;
+        var wrap = buildLockScreen();
+        var form = document.getElementById("planas-lock-form");
+        var pwField = document.getElementById("planas-lock-pw");
+        var msg = document.getElementById("planas-lock-msg");
+        var rememberBox = document.getElementById("planas-lock-remember");
+
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          msg.textContent = "";
+          var password = pwField.value;
+          deriveKeys(password, saltBytes).then(function (keys) {
+            return unlockWith(keyJson, keys.kEnc).then(function () {
+              var remember = !!rememberBox.checked;
+              var afterRemember = remember ? idbPut(keyJson.salt, { kEnc: keys.kEnc, kMac: keys.kMac }) : Promise.resolve();
+              return afterRemember.then(function () {
+                return start(keyJson, keys.kEnc, keys.kMac, !remember);
+              });
+            }).then(function () {
+              removeLockScreen(wrap);
+            });
+          }).catch(function () {
+            msg.textContent = "Neteisingas slaptazodis";
+            pwField.value = "";
+            var btn = document.getElementById("planas-lock-btn");
+            btn.disabled = true;
+            setTimeout(function () { btn.disabled = false; }, 1000);
+          });
+        });
+      });
+    }).catch(function () {
+      // key.json unreachable (offline first load): nothing to unlock yet, leave the page hidden behind no screen
+      // beyond what focus.template.html itself shows while waiting for PLANAS_START.
+    });
+
+    buildLockButton();
+  }
+
+  // Node (test_site.py's `node -e` test, via `require()`) has no `document`: skip the DOM boot in that case
+  // instead of throwing, so the pure `lockCleanupPlan` export below can still be required and tested on its own.
+  if (typeof document !== "undefined") {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", boot);
+    } else {
+      boot();
+    }
+  }
+
+  // Test-only export (browsers never define `module`; this file stays a plain inline <script>, never a module).
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = { lockCleanupPlan: lockCleanupPlan, isPendingSyncKey: isPendingSyncKey };
+  }
+})();
+
+</script>
